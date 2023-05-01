@@ -1,3 +1,8 @@
 # Godot 4+ specific ignores
 .godot/
 .vscode/
+
+
+GameJam2023Piksel.csproj
+GameJam2023Piksel.sln
+
