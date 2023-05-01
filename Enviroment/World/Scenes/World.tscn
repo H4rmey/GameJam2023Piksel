@@ -1,11 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://c2ljyq5i7h7lp"]
+[gd_scene load_steps=9 format=3 uid="uid://c2ljyq5i7h7lp"]
 
+[ext_resource type="Texture2D" uid="uid://bag407c1am5gn" path="res://Enviroment/World/Sprites/FloorTile.png" id="1_ch7ao"]
 [ext_resource type="PackedScene" uid="uid://b8gj50b7hdxu8" path="res://Player/Scenes/Player.tscn" id="1_q0mud"]
 
-[sub_resource type="PlaneMesh" id="1"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cajuw"]
+albedo_texture = ExtResource("1_ch7ao")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3pckq"]
-albedo_color = Color(0.0431373, 0.188235, 0.223529, 1)
+[sub_resource type="PlaneMesh" id="1"]
 
 [sub_resource type="BoxShape3D" id="3"]
 size = Vector3(201.07, 0.002, 199.646)
@@ -28,8 +29,8 @@ transform = Transform3D(1, 0, 0, 0, 0.750492, 0.66088, 0, -0.66088, 0.750492, 0,
 
 [node name="MeshInstance" type="MeshInstance3D" parent="StaticBody"]
 transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, 0.0514464, 0, 0)
+material_override = SubResource("StandardMaterial3D_cajuw")
 mesh = SubResource("1")
-surface_material_override/0 = SubResource("StandardMaterial3D_3pckq")
 
 [node name="CollisionShape" type="CollisionShape3D" parent="StaticBody"]
 shape = SubResource("3")
