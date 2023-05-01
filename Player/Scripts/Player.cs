@@ -33,7 +33,7 @@ public partial class Player : CharacterBody3D
 
     public override void _Ready() {
         camera_pivot = GetNode<Node3D>("CameraPivot");
-        camera = GetNode<Camera3D>("CameraPivot/Camera");
+        camera = GetNode<Camera3D>("CameraPivot/CameraBoom/Camera");
 
         Input.MouseMode = Input.MouseModeEnum.Captured;
     }
