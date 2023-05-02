@@ -1,7 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://c2ljyq5i7h7lp"]
+[gd_scene load_steps=11 format=3 uid="uid://c2ljyq5i7h7lp"]
 
 [ext_resource type="Texture2D" uid="uid://bag407c1am5gn" path="res://Enviroment/World/Sprites/FloorTile.png" id="1_ch7ao"]
 [ext_resource type="PackedScene" uid="uid://b8gj50b7hdxu8" path="res://Player/Scenes/Player.tscn" id="1_q0mud"]
+[ext_resource type="PackedScene" uid="uid://b8tbcdl2dafpv" path="res://Cows/Scenes/Cow.tscn" id="3_kxicp"]
+[ext_resource type="Script" path="res://Cows/Scripts/cow.cs" id="4_vlgy8"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cajuw"]
 albedo_texture = ExtResource("1_ch7ao")
@@ -56,3 +58,38 @@ size = Vector3(1, 24.8256, 17.1182)
 [node name="Player" parent="." instance=ExtResource("1_q0mud")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.26211, 0)
 jump_power = 100.0
+
+[node name="Cow" parent="." instance=ExtResource("3_kxicp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.18694, 0.35157, 0)
+script = ExtResource("4_vlgy8")
+playerPath = NodePath("../Player")
+
+[node name="Cow6" parent="." instance=ExtResource("3_kxicp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.80732, 0.35157, 2.90154)
+script = ExtResource("4_vlgy8")
+playerPath = NodePath("../Player")
+
+[node name="Cow7" parent="." instance=ExtResource("3_kxicp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0583444, 0.35157, 2.10335)
+script = ExtResource("4_vlgy8")
+playerPath = NodePath("../Player")
+
+[node name="Cow2" parent="." instance=ExtResource("3_kxicp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.579567, 0.35157, -5.99269)
+script = ExtResource("4_vlgy8")
+playerPath = NodePath("../Player")
+
+[node name="Cow3" parent="." instance=ExtResource("3_kxicp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.43559, 0.35157, -0.40047)
+script = ExtResource("4_vlgy8")
+playerPath = NodePath("../Player")
+
+[node name="Cow4" parent="." instance=ExtResource("3_kxicp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6958, 0.351569, -1.58717)
+script = ExtResource("4_vlgy8")
+playerPath = NodePath("../Player")
+
+[node name="Cow5" parent="." instance=ExtResource("3_kxicp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.71407, 0.35157, -3.54694)
+script = ExtResource("4_vlgy8")
+playerPath = NodePath("../Player")

@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://b8tbcdl2dafpv"]
+
+[ext_resource type="Texture2D" uid="uid://clgeracv8ccax" path="res://Cows/Sprites/Cow1.png" id="1_5os6g"]
+
+[node name="Cow" type="Node3D"]
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+texture_filter = 0
+texture = ExtResource("1_5os6g")
