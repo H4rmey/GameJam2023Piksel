@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://blj8g4r2xuy4r"]
+
+[ext_resource type="Texture2D" uid="uid://b75ykq7dbk56s" path="res://Enviroment/World/Sprites/Hekje.png" id="1_ofkun"]
+
+[node name="Hekje" type="Node3D"]
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+texture_filter = 0
+texture = ExtResource("1_ofkun")

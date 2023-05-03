@@ -3,13 +3,13 @@ using Godot.Collections;
 
 public partial class SpaceShip : Node3D
 {
-    [Export]
-    public NodePath pathPlayer;
-    [Export]
+	[Export]
+	public NodePath pathPlayer;
+	[Export]
 	public NodePath pathCows;
-    [Export]
+	[Export]
 	public NodePath pathEndPoints;
-    [Export]
+	[Export]
 	public NodePath pathBetweenPoints;
     [Export]
 	public double speedToEnd = 5;
@@ -48,11 +48,11 @@ public partial class SpaceShip : Node3D
         	cowsOriginal.Add(GetNode<Node3D>(pathCows).GetChild<Node3D>(i));
 		}
 		for (int i = 0; i < GetNode<Node3D>(pathEndPoints).GetChildCount(); i++) {
-        	endPoints.Add(GetNode<Node3D>(pathEndPoints).GetChild<Node3D>(i));
+			endPoints.Add(GetNode<Node3D>(pathEndPoints).GetChild<Node3D>(i));
 		}
 		for (int i = 0; i < GetNode<Node3D>(pathBetweenPoints).GetChildCount(); i++) 
 		{
-        	betweenPoints.Add(GetNode<Node3D>(pathBetweenPoints).GetChild<Node3D>(i));
+			betweenPoints.Add(GetNode<Node3D>(pathBetweenPoints).GetChild<Node3D>(i));
 		}
 		this.GlobalPosition = endPoints[0].GlobalPosition;
 
