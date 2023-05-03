@@ -12,9 +12,6 @@ height = 1.00811
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 2
 script = ExtResource("1")
-speed = 5.0
-min_pitch = -30.0
-max_pitch = 30.0
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 texture_filter = 0

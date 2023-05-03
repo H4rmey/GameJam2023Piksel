@@ -2,20 +2,21 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d3uif44sdfrd5"
-path="res://.godot/imported/SpaceShip.png-5374c31f4bd92ca5182fcda0c67a104a.ctex"
+uid="uid://1a7gstvoxh7o"
+path.s3tc="res://.godot/imported/Sky.png-0184fd4d1e59a6b0fcdc37922549c2f4.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
-source_file="res://SpaceShip/Sprites/SpaceShip.png"
-dest_files=["res://.godot/imported/SpaceShip.png-5374c31f4bd92ca5182fcda0c67a104a.ctex"]
+source_file="res://Enviroment/World/Sprites/Sky.png"
+dest_files=["res://.godot/imported/Sky.png-0184fd4d1e59a6b0fcdc37922549c2f4.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

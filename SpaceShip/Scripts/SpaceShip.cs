@@ -3,40 +3,40 @@ using Godot.Collections;
 
 public partial class SpaceShip : Node3D
 {
-    [Export]
-    public NodePath pathPlayer;
-    [Export]
+	[Export]
+	public NodePath pathPlayer;
+	[Export]
 	public NodePath pathCows;
-    [Export]
+	[Export]
 	public NodePath pathEndPoints;
-    [Export]
+	[Export]
 	public NodePath pathBetweenPoints;
-    [Export]
+	[Export]
 	public double speed;
-    [Export]
+	[Export]
 	public int nof_passes;
 	
 	private int currentNodeIndex;
 	private Vector3 nextPosition;
 
-    private CharacterBody3D player;
-    private Array<Node3D> cows = new Array<Node3D>();
-    private Array<Node3D> endPoints = new Array<Node3D>();
-    private Array<Node3D> betweenPoints = new Array<Node3D>();
+	private CharacterBody3D player;
+	private Array<Node3D> cows = new Array<Node3D>();
+	private Array<Node3D> endPoints = new Array<Node3D>();
+	private Array<Node3D> betweenPoints = new Array<Node3D>();
 
-    public override void _Ready()
-    {
-        player = GetNode<CharacterBody3D>(pathPlayer);
+	public override void _Ready()
+	{
+		player = GetNode<CharacterBody3D>(pathPlayer);
 		for (int i = 0; i < GetNode<Node3D>(pathCows).GetChildCount(); i++) 
 		{
-        	cows.Add(GetNode<Node3D>(pathCows).GetChild<Node3D>(i));
+			cows.Add(GetNode<Node3D>(pathCows).GetChild<Node3D>(i));
 		}
 		for (int i = 0; i < GetNode<Node3D>(pathEndPoints).GetChildCount(); i++) {
-        	endPoints.Add(GetNode<Node3D>(pathEndPoints).GetChild<Node3D>(i));
+			endPoints.Add(GetNode<Node3D>(pathEndPoints).GetChild<Node3D>(i));
 		}
 		for (int i = 0; i < GetNode<Node3D>(pathBetweenPoints).GetChildCount(); i++) 
 		{
-        	betweenPoints.Add(GetNode<Node3D>(pathBetweenPoints).GetChild<Node3D>(i));
+			betweenPoints.Add(GetNode<Node3D>(pathBetweenPoints).GetChild<Node3D>(i));
 		}
 		
 		CalculateNextEndPoint();
@@ -44,20 +44,20 @@ public partial class SpaceShip : Node3D
 		Tween tween = GetTree().CreateTween();
 		tween.TweenProperty(this, "position", nextPosition, 5.0f);
 		tween.SetTrans(Tween.TransitionType.Quart);
-    }
+	}
 
-    public override void _Process(double delta)
-    {
+	public override void _Process(double delta)
+	{
 		LookAtPlayer();
-    }
+	}
 	
 	private void LookAtPlayer()
 	{
-        if (player == null) {
-            GD.Print("Error, player not found for cow: ", this);
-            return; 
-        }
-        this.LookAt(player.GlobalPosition, Vector3.Up);
+		if (player == null) {
+			GD.Print("Error, player not found for cow: ", this);
+			return; 
+		}
+		this.LookAt(player.GlobalPosition, Vector3.Up);
 	}
 
 	private void CalculateNextEndPoint()
