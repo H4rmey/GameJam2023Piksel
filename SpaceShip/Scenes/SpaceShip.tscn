@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bjjiuptmrihtw"]
+
+[ext_resource type="Script" path="res://SpaceShip/Scripts/SpaceShip.cs" id="1_rtukt"]
+[ext_resource type="Texture2D" uid="uid://d3uif44sdfrd5" path="res://SpaceShip/Sprites/SpaceShip.png" id="1_uk837"]
+
+[node name="SpaceShip" type="Node3D"]
+script = ExtResource("1_rtukt")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+texture_filter = 0
+texture = ExtResource("1_uk837")
