@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 [gd_scene load_steps=15 format=3 uid="uid://vwtsc8y8sj3y"]
+=======
+[gd_scene load_steps=18 format=3 uid="uid://c2ljyq5i7h7lp"]
+>>>>>>> ee4c746f452e67a17c11d867965a4ce43abedaa7
 
 [ext_resource type="Texture2D" uid="uid://bag407c1am5gn" path="res://Enviroment/World/Sprites/FloorTile.png" id="1_ch7ao"]
 [ext_resource type="PackedScene" uid="uid://b8gj50b7hdxu8" path="res://Player/Scenes/Player.tscn" id="1_q0mud"]
@@ -7,6 +11,9 @@
 [ext_resource type="PackedScene" uid="uid://bjjiuptmrihtw" path="res://SpaceShip/Scenes/SpaceShip.tscn" id="5_j5hay"]
 [ext_resource type="PackedScene" path="res://Enviroment/World/Scenes/Hekje.tscn" id="6_ma0ga"]
 [ext_resource type="Texture2D" uid="uid://1a7gstvoxh7o" path="res://Enviroment/World/Sprites/Sky.png" id="7_1r5mh"]
+[ext_resource type="PackedScene" uid="uid://ducfppmvjfyvn" path="res://Enviroment/World/Scenes/Grass.tscn" id="8_e7tfh"]
+[ext_resource type="Texture2D" uid="uid://ditys0h3alhw7" path="res://Enviroment/World/Sprites/Grass 2.png" id="9_c1juw"]
+[ext_resource type="Texture2D" uid="uid://dktsyg1urg61s" path="res://Enviroment/World/Sprites/Rock1.png" id="10_pbpdr"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cajuw"]
 albedo_texture = ExtResource("1_ch7ao")
@@ -48,7 +55,9 @@ volumetric_fog_enabled = true
 volumetric_fog_density = 0.002
 
 [sub_resource type="FogMaterial" id="FogMaterial_8gy4i"]
-albedo = Color(0.101961, 0.333333, 0.32549, 1)
+albedo = Color(0.313726, 0.776471, 0.756863, 1)
+height_falloff = 1e-05
+edge_fade = 7.93215e-05
 
 [node name="World" type="Node3D"]
 
@@ -310,7 +319,166 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.92128, -0.337461, 0.235373
 size = Vector3(41.207, 0.565534, 41.6908)
 material = SubResource("FogMaterial_8gy4i")
 
+<<<<<<< HEAD
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.99446, 1.48186e-08, 0.105119, -0.0631918, 0.799139, 0.597815, -0.0840047, -0.601146, 0.794712, 0, 4.30168, 0)
 light_color = Color(0.384314, 0.431373, 1, 1)
 shadow_enabled = true
+=======
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="Grass" parent="Node3D" instance=ExtResource("8_e7tfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.62229, 0.172361, 0)
+
+[node name="Grass2" parent="Node3D" instance=ExtResource("8_e7tfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.14664, 0.172361, 5.29116)
+
+[node name="Grass3" parent="Node3D" instance=ExtResource("8_e7tfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.430044, 0.172361, -6.12712)
+
+[node name="Grass4" parent="Node3D" instance=ExtResource("8_e7tfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.199, 0.172361, -0.835961)
+
+[node name="Grass5" parent="Node3D" instance=ExtResource("8_e7tfh")]
+transform = Transform3D(-0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, -0.5, -0.53366, 0.172361, 3.47988)
+
+[node name="Grass6" parent="Node3D" instance=ExtResource("8_e7tfh")]
+transform = Transform3D(-0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, -0.5, -10.0004, 0.172361, 9.29444)
+
+[node name="Grass7" parent="Node3D" instance=ExtResource("8_e7tfh")]
+transform = Transform3D(-0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, -0.965926, 2.34453, 0.172361, -4.58756)
+
+[node name="Grass8" parent="Node3D" instance=ExtResource("8_e7tfh")]
+transform = Transform3D(-0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, -0.965926, -8.46098, 0.172361, -7.17005)
+
+[node name="Grasje2" type="Node3D" parent="Node3D"]
+
+[node name="Sprite3D" type="Sprite3D" parent="Node3D/Grasje2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15185, 0)
+texture_filter = 0
+texture = ExtResource("9_c1juw")
+
+[node name="Sprite3D2" type="Sprite3D" parent="Node3D/Grasje2"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.15185, 0)
+texture_filter = 0
+texture = ExtResource("9_c1juw")
+
+[node name="Grasje3" type="Node3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.76463, 0, -8.0662)
+
+[node name="Sprite3D" type="Sprite3D" parent="Node3D/Grasje3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15185, 0)
+texture_filter = 0
+texture = ExtResource("9_c1juw")
+
+[node name="Sprite3D2" type="Sprite3D" parent="Node3D/Grasje3"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.15185, 0)
+texture_filter = 0
+texture = ExtResource("9_c1juw")
+
+[node name="Grasje4" type="Node3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.76463, 0, 8.74489)
+
+[node name="Sprite3D" type="Sprite3D" parent="Node3D/Grasje4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15185, 0)
+texture_filter = 0
+texture = ExtResource("9_c1juw")
+
+[node name="Sprite3D2" type="Sprite3D" parent="Node3D/Grasje4"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.15185, 0)
+texture_filter = 0
+texture = ExtResource("9_c1juw")
+
+[node name="Grasje5" type="Node3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.39397, 0, 7.16097)
+
+[node name="Sprite3D" type="Sprite3D" parent="Node3D/Grasje5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15185, 0)
+texture_filter = 0
+texture = ExtResource("9_c1juw")
+
+[node name="Sprite3D2" type="Sprite3D" parent="Node3D/Grasje5"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.15185, 0)
+texture_filter = 0
+texture = ExtResource("9_c1juw")
+
+[node name="Grasje6" type="Node3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.48919, 0, -1.74693)
+
+[node name="Sprite3D" type="Sprite3D" parent="Node3D/Grasje6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15185, 0)
+texture_filter = 0
+texture = ExtResource("9_c1juw")
+
+[node name="Sprite3D2" type="Sprite3D" parent="Node3D/Grasje6"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.15185, 0)
+texture_filter = 0
+texture = ExtResource("9_c1juw")
+
+[node name="Grasje7" type="Node3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.27279, 0, -3.32777)
+
+[node name="Sprite3D" type="Sprite3D" parent="Node3D/Grasje7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15185, 0)
+texture_filter = 0
+texture = ExtResource("9_c1juw")
+
+[node name="Sprite3D2" type="Sprite3D" parent="Node3D/Grasje7"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.15185, 0)
+texture_filter = 0
+texture = ExtResource("9_c1juw")
+
+[node name="Rocks" type="Node3D" parent="Node3D"]
+
+[node name="rock1" type="Node3D" parent="Node3D/Rocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.9848)
+
+[node name="Sprite3D" type="Sprite3D" parent="Node3D/Rocks/rock1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0889906, 0)
+texture_filter = 0
+texture = ExtResource("10_pbpdr")
+
+[node name="Sprite3D2" type="Sprite3D" parent="Node3D/Rocks/rock1"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.0889906, 0)
+texture_filter = 0
+texture = ExtResource("10_pbpdr")
+
+[node name="rock2" type="Node3D" parent="Node3D/Rocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.8542, 0, -7.33948)
+
+[node name="Sprite3D" type="Sprite3D" parent="Node3D/Rocks/rock2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0889906, 0)
+texture_filter = 0
+texture = ExtResource("10_pbpdr")
+
+[node name="Sprite3D2" type="Sprite3D" parent="Node3D/Rocks/rock2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.0889906, 0)
+texture_filter = 0
+texture = ExtResource("10_pbpdr")
+
+[node name="rock3" type="Node3D" parent="Node3D/Rocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.8542, 0, 3.46046)
+
+[node name="Sprite3D" type="Sprite3D" parent="Node3D/Rocks/rock3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0889906, 0)
+texture_filter = 0
+texture = ExtResource("10_pbpdr")
+
+[node name="Sprite3D2" type="Sprite3D" parent="Node3D/Rocks/rock3"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.0889906, 0)
+texture_filter = 0
+texture = ExtResource("10_pbpdr")
+
+[node name="rock4" type="Node3D" parent="Node3D/Rocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.80387, 0, 9.04548)
+
+[node name="Sprite3D" type="Sprite3D" parent="Node3D/Rocks/rock4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0889906, 0)
+texture_filter = 0
+texture = ExtResource("10_pbpdr")
+
+[node name="Sprite3D2" type="Sprite3D" parent="Node3D/Rocks/rock4"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.0889906, 0)
+texture_filter = 0
+texture = ExtResource("10_pbpdr")
+>>>>>>> ee4c746f452e67a17c11d867965a4ce43abedaa7
