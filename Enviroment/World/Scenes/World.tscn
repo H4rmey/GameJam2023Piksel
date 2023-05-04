@@ -1,12 +1,16 @@
-[gd_scene load_steps=8 format=3 uid="uid://c2ljyq5i7h7lp"]
+[gd_scene load_steps=15 format=3 uid="uid://vwtsc8y8sj3y"]
 
 [ext_resource type="Texture2D" uid="uid://bag407c1am5gn" path="res://Enviroment/World/Sprites/FloorTile.png" id="1_ch7ao"]
 [ext_resource type="PackedScene" uid="uid://b8gj50b7hdxu8" path="res://Player/Scenes/Player.tscn" id="1_q0mud"]
+[ext_resource type="Script" path="res://Cows/Scripts/Cow.cs" id="2_mwkac"]
 [ext_resource type="PackedScene" uid="uid://b8tbcdl2dafpv" path="res://Cows/Scenes/Cow.tscn" id="3_kxicp"]
 [ext_resource type="PackedScene" uid="uid://bjjiuptmrihtw" path="res://SpaceShip/Scenes/SpaceShip.tscn" id="5_j5hay"]
+[ext_resource type="PackedScene" path="res://Enviroment/World/Scenes/Hekje.tscn" id="6_ma0ga"]
+[ext_resource type="Texture2D" uid="uid://1a7gstvoxh7o" path="res://Enviroment/World/Sprites/Sky.png" id="7_1r5mh"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cajuw"]
 albedo_texture = ExtResource("1_ch7ao")
+uv1_scale = Vector3(10, 10, 10)
 
 [sub_resource type="PlaneMesh" id="1"]
 size = Vector2(0.25, 0.25)
@@ -14,45 +18,39 @@ size = Vector2(0.25, 0.25)
 [sub_resource type="BoxShape3D" id="3"]
 size = Vector3(201.07, 0.002, 199.646)
 
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_gp1v8"]
+panorama = ExtResource("7_1r5mh")
+
+[sub_resource type="Sky" id="Sky_qj5m3"]
+sky_material = SubResource("PanoramaSkyMaterial_gp1v8")
+process_mode = 1
+radiance_size = 6
+
+[sub_resource type="Environment" id="Environment_lvl34"]
+background_mode = 2
+background_color = Color(0, 0.0588235, 0.164706, 1)
+sky = SubResource("Sky_qj5m3")
+ambient_light_source = 2
+ambient_light_color = Color(0, 0, 0.368627, 1)
+ambient_light_energy = 0.0
+reflected_light_source = 1
+tonemap_mode = 3
+ssr_enabled = true
+glow_intensity = 0.9
+fog_enabled = true
+fog_light_color = Color(0.429303, 0.549414, 0.57967, 1)
+fog_light_energy = 0.1
+fog_density = 0.0967
+fog_aerial_perspective = 0.326
+fog_sky_affect = 0.835
+fog_height = -0.01
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.002
+
+[sub_resource type="FogMaterial" id="FogMaterial_8gy4i"]
+albedo = Color(0.101961, 0.333333, 0.32549, 1)
+
 [node name="World" type="Node3D"]
-
-[node name="_cows" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.417707, 0)
-
-[node name="Cow_1" parent="_cows" instance=ExtResource("3_kxicp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.48895, 0, 0.0761266)
-
-[node name="Cow_2" parent="_cows" instance=ExtResource("3_kxicp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.35453, 0, 6.0802)
-
-[node name="Cow_3" parent="_cows" instance=ExtResource("3_kxicp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.22058, 0, 4.81417)
-
-[node name="Cow_4" parent="_cows" instance=ExtResource("3_kxicp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.92243, 0, -5.37424)
-
-[node name="Cow_5" parent="_cows" instance=ExtResource("3_kxicp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.27578, 0, -6.10977)
-
-[node name="Cow_6" parent="_cows" instance=ExtResource("3_kxicp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.57032, -1.01328e-06, 0.243399)
-
-[node name="Cow_7" parent="_cows" instance=ExtResource("3_kxicp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.61843, -9.53674e-07, -0.419474)
-
-[node name="StaticBody" type="StaticBody3D" parent="."]
-
-[node name="MeshInstance" type="MeshInstance3D" parent="StaticBody"]
-transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, 0.0514464, 0, 0)
-material_override = SubResource("StandardMaterial3D_cajuw")
-mesh = SubResource("1")
-
-[node name="CollisionShape" type="CollisionShape3D" parent="StaticBody"]
-shape = SubResource("3")
-
-[node name="Player" parent="." instance=ExtResource("1_q0mud")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.86865, 0)
-jump_power = 100.0
 
 [node name="SpaceShip" parent="." instance=ExtResource("5_j5hay")]
 transform = Transform3D(0.99446, 0, 0.105119, 0, 1, 0, -0.105119, 0, 0.99446, 0, 4, -4.488)
@@ -60,7 +58,111 @@ pathPlayer = NodePath("../Player")
 pathCows = NodePath("../_cows")
 pathEndPoints = NodePath("../_ShipTravelPointsEnd")
 pathBetweenPoints = NodePath("../_ShipTravelPoints")
-cowHoverBelow = 2.0
+cowHoverBelow = 1.5
+
+[node name="_cows" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.417707, 0)
+
+[node name="Cow_1" parent="_cows" node_paths=PackedStringArray("spaceShip", "spaceShipScript") instance=ExtResource("3_kxicp")]
+transform = Transform3D(1.00006, 0, 0, 0, 1.00006, 0, 0, 0, 1.00006, -7.48895, 0, 0.0761266)
+script = ExtResource("2_mwkac")
+spaceShip = NodePath("../../SpaceShip")
+spaceShipScript = NodePath("../../SpaceShip")
+
+[node name="Cow_2" parent="_cows" node_paths=PackedStringArray("spaceShip", "spaceShipScript") instance=ExtResource("3_kxicp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.35453, 0, 6.0802)
+script = ExtResource("2_mwkac")
+spaceShip = NodePath("../../SpaceShip")
+spaceShipScript = NodePath("../../SpaceShip")
+
+[node name="Cow_3" parent="_cows" node_paths=PackedStringArray("spaceShip", "spaceShipScript") instance=ExtResource("3_kxicp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.22058, 0, 4.81417)
+script = ExtResource("2_mwkac")
+spaceShip = NodePath("../../SpaceShip")
+spaceShipScript = NodePath("../../SpaceShip")
+
+[node name="Cow_4" parent="_cows" node_paths=PackedStringArray("spaceShip", "spaceShipScript") instance=ExtResource("3_kxicp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.92243, 0, -5.37424)
+script = ExtResource("2_mwkac")
+spaceShip = NodePath("../../SpaceShip")
+spaceShipScript = NodePath("../../SpaceShip")
+
+[node name="Cow_5" parent="_cows" node_paths=PackedStringArray("spaceShip", "spaceShipScript") instance=ExtResource("3_kxicp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.27578, 0, -6.10977)
+script = ExtResource("2_mwkac")
+spaceShip = NodePath("../../SpaceShip")
+spaceShipScript = NodePath("../../SpaceShip")
+
+[node name="Cow_6" parent="_cows" node_paths=PackedStringArray("spaceShip", "spaceShipScript") instance=ExtResource("3_kxicp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.57032, -1.01328e-06, 0.243399)
+script = ExtResource("2_mwkac")
+spaceShip = NodePath("../../SpaceShip")
+spaceShipScript = NodePath("../../SpaceShip")
+
+[node name="Cow_7" parent="_cows" node_paths=PackedStringArray("spaceShip", "spaceShipScript") instance=ExtResource("3_kxicp")]
+transform = Transform3D(0.999868, 0.0162483, 0, -0.0162483, 0.999868, 0, 0, 0, 1, 0.61843, -9.53674e-07, -0.419474)
+script = ExtResource("2_mwkac")
+spaceShip = NodePath("../../SpaceShip")
+spaceShipScript = NodePath("../../SpaceShip")
+
+[node name="_Flooring" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance" type="MeshInstance3D" parent="_Flooring"]
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, 0.0514464, 0, 0)
+material_override = SubResource("StandardMaterial3D_cajuw")
+mesh = SubResource("1")
+
+[node name="MeshInstance2" type="MeshInstance3D" parent="_Flooring"]
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, 0.0514464, 0, 0)
+material_override = SubResource("StandardMaterial3D_cajuw")
+mesh = SubResource("1")
+
+[node name="MeshInstance6" type="MeshInstance3D" parent="_Flooring"]
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, 25.0514, 0, 0)
+material_override = SubResource("StandardMaterial3D_cajuw")
+mesh = SubResource("1")
+
+[node name="MeshInstance7" type="MeshInstance3D" parent="_Flooring"]
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, 25.0514, 0, 25)
+material_override = SubResource("StandardMaterial3D_cajuw")
+mesh = SubResource("1")
+
+[node name="MeshInstance8" type="MeshInstance3D" parent="_Flooring"]
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, 25.0514, 0, -25)
+material_override = SubResource("StandardMaterial3D_cajuw")
+mesh = SubResource("1")
+
+[node name="MeshInstance5" type="MeshInstance3D" parent="_Flooring"]
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, -24.9486, 0, 0)
+material_override = SubResource("StandardMaterial3D_cajuw")
+mesh = SubResource("1")
+
+[node name="MeshInstance4" type="MeshInstance3D" parent="_Flooring"]
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, 0.0514464, 0, 25)
+material_override = SubResource("StandardMaterial3D_cajuw")
+mesh = SubResource("1")
+
+[node name="MeshInstance3" type="MeshInstance3D" parent="_Flooring"]
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, 0.0514464, 0, -25)
+material_override = SubResource("StandardMaterial3D_cajuw")
+mesh = SubResource("1")
+
+[node name="MeshInstance9" type="MeshInstance3D" parent="_Flooring"]
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, -24.9486, 0, -25)
+material_override = SubResource("StandardMaterial3D_cajuw")
+mesh = SubResource("1")
+
+[node name="MeshInstance10" type="MeshInstance3D" parent="_Flooring"]
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, -24.9486, 0, 25)
+material_override = SubResource("StandardMaterial3D_cajuw")
+mesh = SubResource("1")
+
+[node name="CollisionShape" type="CollisionShape3D" parent="_Flooring"]
+shape = SubResource("3")
+
+[node name="Player" parent="." instance=ExtResource("1_q0mud")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.86865, 0)
+jump_power = 100.0
 
 [node name="_ShipTravelPoints" type="Node3D" parent="."]
 
@@ -103,13 +205,112 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.0391, 0, 7.85853)
 [node name="_ShipTravelPointsEnd" type="Node3D" parent="."]
 
 [node name="End_1" type="Node3D" parent="_ShipTravelPointsEnd"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.238449, 4, -38.0332)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.238, 4, -38.033)
 
 [node name="End_2" type="Node3D" parent="_ShipTravelPointsEnd"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.6905, 4, -0.238452)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.69, 4, -0.238)
 
 [node name="End_3" type="Node3D" parent="_ShipTravelPointsEnd"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.119225, 4, 31.7142)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.119, 4, 31.714)
 
 [node name="End_4" type="Node3D" parent="_ShipTravelPointsEnd"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48.4059, 4, -0.119228)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48.406, 4, -0.119)
+
+[node name="_HekWerk" type="Node3D" parent="."]
+
+[node name="Hekje" parent="_HekWerk" instance=ExtResource("6_ma0ga")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.63761, 0.295441, -11.3932)
+
+[node name="Hekje2" parent="_HekWerk" instance=ExtResource("6_ma0ga")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.84754, 0.295441, -11.3932)
+
+[node name="Hekje8" parent="_HekWerk" instance=ExtResource("6_ma0ga")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.87804, 0.295441, -11.3932)
+
+[node name="Hekje10" parent="_HekWerk" instance=ExtResource("6_ma0ga")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.17794, 0.295441, -11.3932)
+
+[node name="Hekje9" parent="_HekWerk" instance=ExtResource("6_ma0ga")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.66811, 0.295441, -11.3932)
+
+[node name="Hekje3" parent="_HekWerk" instance=ExtResource("6_ma0ga")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.04829, 0.295441, -11.3932)
+
+[node name="Hekje17" parent="_HekWerk" instance=ExtResource("6_ma0ga")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.63761, 0.295441, 12.22)
+
+[node name="Hekje18" parent="_HekWerk" instance=ExtResource("6_ma0ga")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.84754, 0.295441, 12.22)
+
+[node name="Hekje19" parent="_HekWerk" instance=ExtResource("6_ma0ga")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.87804, 0.295441, 12.22)
+
+[node name="Hekje20" parent="_HekWerk" instance=ExtResource("6_ma0ga")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.17794, 0.295441, 12.22)
+
+[node name="Hekje21" parent="_HekWerk" instance=ExtResource("6_ma0ga")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.66811, 0.295441, 12.22)
+
+[node name="Hekje22" parent="_HekWerk" instance=ExtResource("6_ma0ga")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.04829, 0.295441, 12.22)
+
+[node name="Hekje23" parent="_HekWerk" instance=ExtResource("6_ma0ga")]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 10.7888, 0.295441, 11.0918)
+
+[node name="Hekje5" parent="_HekWerk" instance=ExtResource("6_ma0ga")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 11.9476, 0.295441, -7.5368)
+
+[node name="Hekje24" parent="_HekWerk" instance=ExtResource("6_ma0ga")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 11.9476, 0.295441, -4.34062)
+
+[node name="Hekje25" parent="_HekWerk" instance=ExtResource("6_ma0ga")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 11.9476, 0.295441, -1.08542)
+
+[node name="Hekje26" parent="_HekWerk" instance=ExtResource("6_ma0ga")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 11.9476, 0.295441, 2.13429)
+
+[node name="Hekje27" parent="_HekWerk" instance=ExtResource("6_ma0ga")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 11.9476, 0.295441, 5.38817)
+
+[node name="Hekje28" parent="_HekWerk" instance=ExtResource("6_ma0ga")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 11.9476, 0.295441, 8.5749)
+
+[node name="Hekje4" parent="_HekWerk" instance=ExtResource("6_ma0ga")]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 10.8413, 0.295441, -10.2509)
+
+[node name="Hekje6" parent="_HekWerk" instance=ExtResource("6_ma0ga")]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -10.8991, 0.295441, -10.2363)
+
+[node name="Hekje7" parent="_HekWerk" instance=ExtResource("6_ma0ga")]
+transform = Transform3D(-5.96046e-08, 0, 1, 0, 1, 0, -1, 0, -5.96046e-08, -12.036, 0.295441, -7.5349)
+
+[node name="Hekje11" parent="_HekWerk" instance=ExtResource("6_ma0ga")]
+transform = Transform3D(-5.96046e-08, 0, 1, 0, 1, 0, -1, 0, -5.96046e-08, -12.036, 0.295441, -4.28217)
+
+[node name="Hekje12" parent="_HekWerk" instance=ExtResource("6_ma0ga")]
+transform = Transform3D(-5.96046e-08, 0, 1, 0, 1, 0, -1, 0, -5.96046e-08, -12.036, 0.295441, -1.08314)
+
+[node name="Hekje13" parent="_HekWerk" instance=ExtResource("6_ma0ga")]
+transform = Transform3D(-5.96046e-08, 0, 1, 0, 1, 0, -1, 0, -5.96046e-08, -12.036, 0.295441, 2.11292)
+
+[node name="Hekje14" parent="_HekWerk" instance=ExtResource("6_ma0ga")]
+transform = Transform3D(-5.96046e-08, 0, 1, 0, 1, 0, -1, 0, -5.96046e-08, -12.036, 0.295441, 5.33294)
+
+[node name="Hekje15" parent="_HekWerk" instance=ExtResource("6_ma0ga")]
+transform = Transform3D(-5.96046e-08, 0, 1, 0, 1, 0, -1, 0, -5.96046e-08, -12.036, 0.295441, 8.54829)
+
+[node name="Hekje16" parent="_HekWerk" instance=ExtResource("6_ma0ga")]
+transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, -10.888, 0.295441, 11.1978)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_lvl34")
+
+[node name="FogVolume" type="FogVolume" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.92128, -0.337461, 0.235373)
+size = Vector3(41.207, 0.565534, 41.6908)
+material = SubResource("FogMaterial_8gy4i")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.99446, 1.48186e-08, 0.105119, -0.0631918, 0.799139, 0.597815, -0.0840047, -0.601146, 0.794712, 0, 4.30168, 0)
+light_color = Color(0.384314, 0.431373, 1, 1)
+shadow_enabled = true
