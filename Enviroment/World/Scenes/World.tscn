@@ -319,12 +319,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.92128, -0.337461, 0.235373
 size = Vector3(41.207, 0.565534, 41.6908)
 material = SubResource("FogMaterial_8gy4i")
 
-<<<<<<< HEAD
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.99446, 1.48186e-08, 0.105119, -0.0631918, 0.799139, 0.597815, -0.0840047, -0.601146, 0.794712, 0, 4.30168, 0)
 light_color = Color(0.384314, 0.431373, 1, 1)
 shadow_enabled = true
-=======
 [node name="Node3D" type="Node3D" parent="."]
 
 [node name="Grass" parent="Node3D" instance=ExtResource("8_e7tfh")]
@@ -481,4 +479,3 @@ texture = ExtResource("10_pbpdr")
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.0889906, 0)
 texture_filter = 0
 texture = ExtResource("10_pbpdr")
->>>>>>> ee4c746f452e67a17c11d867965a4ce43abedaa7
