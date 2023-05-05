@@ -1,9 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://bjjiuptmrihtw"]
+[gd_scene load_steps=4 format=3 uid="uid://bjjiuptmrihtw"]
 
 [ext_resource type="Script" path="res://SpaceShip/Scripts/SpaceShip.cs" id="1_rtukt"]
 [ext_resource type="Texture2D" uid="uid://d3uif44sdfrd5" path="res://SpaceShip/Sprites/SpaceShip.png" id="1_uk837"]
 
-[node name="SpaceShip" type="Node3D"]
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_olaby"]
+height = 12.8531
+radius = 0.83077
+
+[node name="SpaceShip" type="Area3D"]
 script = ExtResource("1_rtukt")
 cowHoverBelow = -1.0
 
@@ -18,3 +22,7 @@ light_energy = 8.96
 light_volumetric_fog_energy = 8.403
 shadow_enabled = true
 spot_angle = 15.2056
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6.4264, 0)
+shape = SubResource("CylinderShape3D_olaby")

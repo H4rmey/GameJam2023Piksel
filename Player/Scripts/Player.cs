@@ -33,18 +33,37 @@ public partial class Player : CharacterBody3D
 	private Node3D camera_pivot;
 	private Camera3D camera;
 
+	public  Cow 		cowTarget;
+	public  RayCast3D 	raycast;
+	public  Vector3 	raycastTarget;
 
 	public override void _Ready() {
 		camera_pivot = GetNode<Node3D>("CameraPivot");
 		camera = GetNode<Camera3D>("CameraPivot/CameraBoom/Camera");
 
 		Input.MouseMode = Input.MouseModeEnum.Captured;
+
+		raycast = camera.GetNode<RayCast3D>("RayCast3D");
 	}
 
 
 	public override void _Process(double delta) {
 		if (Input.IsActionJustPressed("ui_cancel")) {
 			Input.MouseMode = Input.MouseModeEnum.Visible;
+		}
+	}
+
+	public override void _PhysicsProcess(double delta) {
+		base._PhysicsProcess(delta);
+		handle_movement(delta);
+
+		if (raycast.GetCollider() as Node3D != null)
+		{
+			cowTarget = raycast.GetCollider() as Cow;
+		}
+		else
+		{
+			cowTarget = null;
 		}
 	}
 
@@ -60,11 +79,12 @@ public partial class Player : CharacterBody3D
 			rotDeg.X = Mathf.Clamp(rotDeg.X, min_pitch, max_pitch);
 			camera_pivot.RotationDegrees = rotDeg;
 		}
-	}
 
-	public override void _PhysicsProcess(double delta) {
-		base._PhysicsProcess(delta);
-		handle_movement(delta);
+		if (@event is InputEventMouseButton eventMouseButton && eventMouseButton.Pressed && eventMouseButton.ButtonIndex == MouseButton.Left)
+   		{
+        	var from = camera.ProjectRayOrigin(eventMouseButton.Position);
+        	var raycastTarget = from + camera.ProjectRayNormal(eventMouseButton.Position) * 10.0f;
+    	}
 	}
 
 	private async void handle_movement(double delta) {
@@ -95,8 +115,12 @@ public partial class Player : CharacterBody3D
 			y_velocity = Mathf.Clamp(y_velocity-gravity, -max_terminal_velocity, max_terminal_velocity);
 		}
 
-		if (Input.IsActionJustPressed("jump")) {
-			GD.Print("pressed!");
+		if (Input.IsActionJustPressed("jump")) {			
+			if (spaceShip.cowTarget == null) {
+				return;
+			}
+
+			cowTarget.CowIsPulled(this.GlobalPosition);
 		}
 		
 		velocity.Y = y_velocity;

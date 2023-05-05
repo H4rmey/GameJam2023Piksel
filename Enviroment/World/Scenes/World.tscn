@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://vwtsc8y8sj3y"]
+[gd_scene load_steps=19 format=3 uid="uid://vwtsc8y8sj3y"]
 
 [ext_resource type="Texture2D" uid="uid://bag407c1am5gn" path="res://Enviroment/World/Sprites/FloorTile.png" id="1_ch7ao"]
 [ext_resource type="PackedScene" uid="uid://b8gj50b7hdxu8" path="res://Player/Scenes/Player.tscn" id="1_q0mud"]
@@ -45,6 +45,8 @@ albedo = Color(0.313726, 0.776471, 0.756863, 1)
 height_falloff = 1e-05
 edge_fade = 7.93215e-05
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_yv1xi"]
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cajuw"]
 albedo_texture = ExtResource("1_ch7ao")
 uv1_scale = Vector3(10, 10, 10)
@@ -58,49 +60,19 @@ size = Vector3(201.07, 0.002, 199.646)
 [node name="World" type="Node3D"]
 
 [node name="SpaceShip" parent="." instance=ExtResource("5_j5hay")]
-transform = Transform3D(0.99446, 0, 0.105119, 0, 1, 0, -0.105119, 0, 0.99446, 0, 4, -4.488)
+transform = Transform3D(0.99446, 0, 0.105119, 0, 1, 0, -0.105119, 0, 0.99446, 0, 4, -27.5321)
 pathPlayer = NodePath("../Player")
 pathCows = NodePath("../CowHandler")
 pathEndPoints = NodePath("../_ShipTravelPointsEnd")
 pathBetweenPoints = NodePath("../_ShipTravelPoints")
 cowHoverBelow = 1.0
 
-[node name="CowHandler" type="Node3D" parent="."]
+[node name="CowHandler" type="Node3D" parent="." groups=["Cows"]]
 script = ExtResource("2_b6obw")
 pathCows = NodePath(".")
 
 [node name="Cow_1" parent="CowHandler" node_paths=PackedStringArray("spaceShip", "spaceShipScript") instance=ExtResource("3_kxicp")]
-transform = Transform3D(1.00006, 0, 0, 0, 1.00006, 0, 0, 0, 1.00006, -7.489, 0.4, 0.076)
-spaceShip = NodePath("../../SpaceShip")
-spaceShipScript = NodePath("../../SpaceShip")
-
-[node name="Cow_2" parent="CowHandler" node_paths=PackedStringArray("spaceShip", "spaceShipScript") instance=ExtResource("3_kxicp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.355, 0.4, 6.08)
-spaceShip = NodePath("../../SpaceShip")
-spaceShipScript = NodePath("../../SpaceShip")
-
-[node name="Cow_3" parent="CowHandler" node_paths=PackedStringArray("spaceShip", "spaceShipScript") instance=ExtResource("3_kxicp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.221, 0.4, 4.814)
-spaceShip = NodePath("../../SpaceShip")
-spaceShipScript = NodePath("../../SpaceShip")
-
-[node name="Cow_4" parent="CowHandler" node_paths=PackedStringArray("spaceShip", "spaceShipScript") instance=ExtResource("3_kxicp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.922, 0.4, -5.374)
-spaceShip = NodePath("../../SpaceShip")
-spaceShipScript = NodePath("../../SpaceShip")
-
-[node name="Cow_5" parent="CowHandler" node_paths=PackedStringArray("spaceShip", "spaceShipScript") instance=ExtResource("3_kxicp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.276, 0.4, -6.11)
-spaceShip = NodePath("../../SpaceShip")
-spaceShipScript = NodePath("../../SpaceShip")
-
-[node name="Cow_6" parent="CowHandler" node_paths=PackedStringArray("spaceShip", "spaceShipScript") instance=ExtResource("3_kxicp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.57, 0.4, 0.243)
-spaceShip = NodePath("../../SpaceShip")
-spaceShipScript = NodePath("../../SpaceShip")
-
-[node name="Cow_7" parent="CowHandler" node_paths=PackedStringArray("spaceShip", "spaceShipScript") instance=ExtResource("3_kxicp")]
-transform = Transform3D(0.999868, 0.0162483, 0, -0.0162483, 0.999868, 0, 0, 0, 1, 0.618, 0.4, -0.419)
+transform = Transform3D(1.00006, 0, 0, 0, 1.00006, 0, 0, 0, 1.00006, -0.789533, 2.65728, -5.72887)
 spaceShip = NodePath("../../SpaceShip")
 spaceShipScript = NodePath("../../SpaceShip")
 
@@ -177,6 +149,7 @@ shadow_enabled = true
 [node name="_Enviroment" type="Node3D" parent="."]
 
 [node name="_Flooring" type="StaticBody3D" parent="_Enviroment"]
+physics_material_override = SubResource("PhysicsMaterial_yv1xi")
 
 [node name="MeshInstance" type="MeshInstance3D" parent="_Enviroment/_Flooring"]
 transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, 0.0514464, 0, 0)
@@ -475,3 +448,5 @@ texture_filter = 0
 texture = ExtResource("10_pbpdr")
 
 [connection signal="OnPositionReached" from="SpaceShip" to="SpaceShip" method="_on_on_position_reached"]
+[connection signal="body_entered" from="SpaceShip" to="CowHandler/Cow_1" method="_on_space_ship_body_entered"]
+[connection signal="body_exited" from="SpaceShip" to="CowHandler/Cow_1" method="_on_space_ship_body_exited"]

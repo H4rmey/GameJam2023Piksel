@@ -2,7 +2,7 @@ using Godot;
 using Godot.Collections;
 using System;
 
-public partial class SpaceShip : Node3D
+public partial class SpaceShip : Area3D
 {
 	[Export]
 	public NodePath pathPlayer;
@@ -30,10 +30,9 @@ public partial class SpaceShip : Node3D
 	
 	public String[] behaviour = {
 		"start_2",
-		"wait_0",
 		"cow_1",
 		"wait_3",
-		"end_1.2",
+		"end_1",
 		"wait_8",
 	};
 
@@ -49,9 +48,9 @@ public partial class SpaceShip : Node3D
 
 	private Vector3 destination;
 	private Node3D 	currentTarget;
-	private Node3D 	cowTarget;
+	public  Cow 	cowTarget;
 
-    private CharacterBody3D player;
+    public CharacterBody3D player;
     private Array<Node3D> cows 				= new Array<Node3D>();
     private Array<Node3D> cowsOriginal 		= new Array<Node3D>();
     private Array<Node3D> endPoints 		= new Array<Node3D>();
@@ -70,6 +69,7 @@ public partial class SpaceShip : Node3D
 		timer.OneShot 		= true;
 		timer.Timeout 		+= OnTimerTimeout;
 
+
 		InitMovePoints();
 		CalculateNextEndPoint(betweenPoints);
 
@@ -77,7 +77,7 @@ public partial class SpaceShip : Node3D
 		
 		this.Connect(SignalName.OnPositionReached, new Callable(this, MethodName.ShipReachedDestination));	
 
-		timer.Start(2);
+		timer.Start(0.1f);
     }
 	
 
@@ -119,9 +119,9 @@ public partial class SpaceShip : Node3D
 			event_id=0;	
 		}
 
-		String event_name 	= behaviour[event_id].Split('_')[0];
-		String t_speed 		= behaviour[event_id].Split('_')[1];
-		speed 			    = (float) Convert.ToDouble(t_speed);
+		String event_name 		= behaviour[event_id].Split('_')[0];
+		String t_speed 		    = behaviour[event_id].Split('_')[1];
+		speed 			        = (float) Convert.ToDouble(t_speed);
 		GD.Print("Ship: Timer is done! ", event_name);
 		
 		mustWait = false;
@@ -137,14 +137,8 @@ public partial class SpaceShip : Node3D
 		else if (event_name == "cow")
 		{
 			CalculateNextEndPoint(cows);
+			cowTarget = currentTarget as Cow;
 			destination = new Vector3(destination.X, this.GlobalPosition.Y, destination.Z);
-
-			Cow cow = currentTarget as Cow;
-			cow.destination = new Vector3(this.GlobalPosition.X, this.GlobalPosition.Y-cowHoverBelow, this.GlobalPosition.Z);
-			cow.mustWait = false;
-			cow.SetLockedMode(true);
-
-			GD.Print("Ship: Abducting Cow! ", wait_time);
 		}
 		else if (event_name == "end")
 		{
@@ -160,7 +154,7 @@ public partial class SpaceShip : Node3D
 
 			timer.Start(wait_time);
 		}
-
+		 
 		event_id++;
 	}
 
