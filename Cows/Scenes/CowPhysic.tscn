@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://da33ycp2s0lfj"]
+
+[ext_resource type="Texture2D" uid="uid://clgeracv8ccax" path="res://Cows/Sprites/Cow1.png" id="1_ugjtt"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_dmrct"]
+radius = 0.390812
+
+[node name="CowPhysic" type="RigidBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_dmrct")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+billboard = 2
+texture_filter = 0
+texture = ExtResource("1_ugjtt")
