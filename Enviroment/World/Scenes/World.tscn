@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bag407c1am5gn" path="res://Enviroment/World/Sprites/FloorTile.png" id="1_ch7ao"]
 [ext_resource type="PackedScene" uid="uid://b8gj50b7hdxu8" path="res://Player/Scenes/Player.tscn" id="1_q0mud"]
-[ext_resource type="Script" path="res://Cows/Scripts/Cow.cs" id="2_mwkac"]
+[ext_resource type="Script" path="res://Enviroment/World/Scenes/CowHandler.cs" id="2_b6obw"]
 [ext_resource type="PackedScene" uid="uid://b8tbcdl2dafpv" path="res://Cows/Scenes/Cow.tscn" id="3_kxicp"]
 [ext_resource type="PackedScene" uid="uid://bjjiuptmrihtw" path="res://SpaceShip/Scenes/SpaceShip.tscn" id="5_j5hay"]
 [ext_resource type="PackedScene" path="res://Enviroment/World/Scenes/Hekje.tscn" id="6_ma0ga"]
@@ -60,58 +60,53 @@ size = Vector3(201.07, 0.002, 199.646)
 [node name="SpaceShip" parent="." instance=ExtResource("5_j5hay")]
 transform = Transform3D(0.99446, 0, 0.105119, 0, 1, 0, -0.105119, 0, 0.99446, 0, 4, -4.488)
 pathPlayer = NodePath("../Player")
-pathCows = NodePath("../_cows")
+pathCows = NodePath("../CowHandler")
 pathEndPoints = NodePath("../_ShipTravelPointsEnd")
 pathBetweenPoints = NodePath("../_ShipTravelPoints")
-cowHoverBelow = 1.5
+cowHoverBelow = 1.0
 
-[node name="_cows" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.417707, 0)
+[node name="CowHandler" type="Node3D" parent="."]
+script = ExtResource("2_b6obw")
+pathCows = NodePath(".")
 
-[node name="Cow_1" parent="_cows" node_paths=PackedStringArray("spaceShip", "spaceShipScript") instance=ExtResource("3_kxicp")]
-transform = Transform3D(1.00006, 0, 0, 0, 1.00006, 0, 0, 0, 1.00006, -7.48895, 0, 0.0761266)
-script = ExtResource("2_mwkac")
+[node name="Cow_1" parent="CowHandler" node_paths=PackedStringArray("spaceShip", "spaceShipScript") instance=ExtResource("3_kxicp")]
+transform = Transform3D(1.00006, 0, 0, 0, 1.00006, 0, 0, 0, 1.00006, -7.489, 0.4, 0.076)
 spaceShip = NodePath("../../SpaceShip")
 spaceShipScript = NodePath("../../SpaceShip")
 
-[node name="Cow_2" parent="_cows" node_paths=PackedStringArray("spaceShip", "spaceShipScript") instance=ExtResource("3_kxicp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.35453, 0, 6.0802)
-script = ExtResource("2_mwkac")
+[node name="Cow_2" parent="CowHandler" node_paths=PackedStringArray("spaceShip", "spaceShipScript") instance=ExtResource("3_kxicp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.355, 0.4, 6.08)
 spaceShip = NodePath("../../SpaceShip")
 spaceShipScript = NodePath("../../SpaceShip")
 
-[node name="Cow_3" parent="_cows" node_paths=PackedStringArray("spaceShip", "spaceShipScript") instance=ExtResource("3_kxicp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.22058, 0, 4.81417)
-script = ExtResource("2_mwkac")
+[node name="Cow_3" parent="CowHandler" node_paths=PackedStringArray("spaceShip", "spaceShipScript") instance=ExtResource("3_kxicp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.221, 0.4, 4.814)
 spaceShip = NodePath("../../SpaceShip")
 spaceShipScript = NodePath("../../SpaceShip")
 
-[node name="Cow_4" parent="_cows" node_paths=PackedStringArray("spaceShip", "spaceShipScript") instance=ExtResource("3_kxicp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.92243, 0, -5.37424)
-script = ExtResource("2_mwkac")
+[node name="Cow_4" parent="CowHandler" node_paths=PackedStringArray("spaceShip", "spaceShipScript") instance=ExtResource("3_kxicp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.922, 0.4, -5.374)
 spaceShip = NodePath("../../SpaceShip")
 spaceShipScript = NodePath("../../SpaceShip")
 
-[node name="Cow_5" parent="_cows" node_paths=PackedStringArray("spaceShip", "spaceShipScript") instance=ExtResource("3_kxicp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.27578, 0, -6.10977)
-script = ExtResource("2_mwkac")
+[node name="Cow_5" parent="CowHandler" node_paths=PackedStringArray("spaceShip", "spaceShipScript") instance=ExtResource("3_kxicp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.276, 0.4, -6.11)
 spaceShip = NodePath("../../SpaceShip")
 spaceShipScript = NodePath("../../SpaceShip")
 
-[node name="Cow_6" parent="_cows" node_paths=PackedStringArray("spaceShip", "spaceShipScript") instance=ExtResource("3_kxicp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.57032, -1.01328e-06, 0.243399)
-script = ExtResource("2_mwkac")
+[node name="Cow_6" parent="CowHandler" node_paths=PackedStringArray("spaceShip", "spaceShipScript") instance=ExtResource("3_kxicp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.57, 0.4, 0.243)
 spaceShip = NodePath("../../SpaceShip")
 spaceShipScript = NodePath("../../SpaceShip")
 
-[node name="Cow_7" parent="_cows" node_paths=PackedStringArray("spaceShip", "spaceShipScript") instance=ExtResource("3_kxicp")]
-transform = Transform3D(0.999868, 0.0162483, 0, -0.0162483, 0.999868, 0, 0, 0, 1, 0.61843, -9.53674e-07, -0.419474)
-script = ExtResource("2_mwkac")
+[node name="Cow_7" parent="CowHandler" node_paths=PackedStringArray("spaceShip", "spaceShipScript") instance=ExtResource("3_kxicp")]
+transform = Transform3D(0.999868, 0.0162483, 0, -0.0162483, 0.999868, 0, 0, 0, 1, 0.618, 0.4, -0.419)
 spaceShip = NodePath("../../SpaceShip")
 spaceShipScript = NodePath("../../SpaceShip")
 
-[node name="Player" parent="." instance=ExtResource("1_q0mud")]
+[node name="Player" parent="." node_paths=PackedStringArray("spaceShip") instance=ExtResource("1_q0mud")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.86865, 0)
+spaceShip = NodePath("../SpaceShip")
 jump_power = 100.0
 
 [node name="_ShipTravelPoints" type="Node3D" parent="."]
@@ -478,3 +473,5 @@ texture = ExtResource("10_pbpdr")
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.0889906, 0)
 texture_filter = 0
 texture = ExtResource("10_pbpdr")
+
+[connection signal="OnPositionReached" from="SpaceShip" to="SpaceShip" method="_on_on_position_reached"]

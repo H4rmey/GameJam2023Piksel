@@ -4,6 +4,8 @@ using System;
 public partial class Player : CharacterBody3D
 {
 	[Export]
+	public SpaceShip spaceShip;
+	[Export]
 	float speed = 20f;
 	[Export]
 	float acceleration = 15f;
@@ -30,6 +32,7 @@ public partial class Player : CharacterBody3D
 
 	private Node3D camera_pivot;
 	private Camera3D camera;
+
 
 	public override void _Ready() {
 		camera_pivot = GetNode<Node3D>("CameraPivot");
@@ -92,9 +95,9 @@ public partial class Player : CharacterBody3D
 			y_velocity = Mathf.Clamp(y_velocity-gravity, -max_terminal_velocity, max_terminal_velocity);
 		}
 
-		//if (Input.IsActionJustPressed("jump") && IsOnFloor()) {
-		//    y_velocity = jump_power;
-		//}
+		if (Input.IsActionJustPressed("jump")) {
+			GD.Print("pressed!");
+		}
 		
 		velocity.Y = y_velocity;
 		MoveAndSlide();

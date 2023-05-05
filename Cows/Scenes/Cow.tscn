@@ -1,10 +1,24 @@
-[gd_scene load_steps=2 format=3 uid="uid://b8tbcdl2dafpv"]
+[gd_scene load_steps=5 format=3 uid="uid://b8tbcdl2dafpv"]
 
+[ext_resource type="Script" path="res://Cows/Scripts/Cow.cs" id="1_1p54e"]
 [ext_resource type="Texture2D" uid="uid://clgeracv8ccax" path="res://Cows/Sprites/Cow1.png" id="1_5os6g"]
 
-[node name="Cow" type="Node3D"]
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_eocqo"]
+bounce = 0.4
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_nja2w"]
+radius = 0.390812
+
+[node name="Cow" type="RigidBody3D"]
+physics_material_override = SubResource("PhysicsMaterial_eocqo")
+gravity_scale = 0.5
+freeze_mode = 1
+script = ExtResource("1_1p54e")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 billboard = 2
 texture_filter = 0
 texture = ExtResource("1_5os6g")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_nja2w")
