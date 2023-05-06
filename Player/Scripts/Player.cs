@@ -82,9 +82,9 @@ public partial class Player : CharacterBody3D
 
 		if (@event is InputEventMouseButton eventMouseButton && eventMouseButton.Pressed && eventMouseButton.ButtonIndex == MouseButton.Left)
    		{
-        	var from = camera.ProjectRayOrigin(eventMouseButton.Position);
-        	var raycastTarget = from + camera.ProjectRayNormal(eventMouseButton.Position) * 10.0f;
-    	}
+			var from = camera.ProjectRayOrigin(eventMouseButton.Position);
+			var raycastTarget = from + camera.ProjectRayNormal(eventMouseButton.Position) * 10.0f;
+		}
 	}
 
 	private async void handle_movement(double delta) {

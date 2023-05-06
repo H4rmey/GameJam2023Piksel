@@ -9,7 +9,6 @@ radius = 0.83077
 
 [node name="SpaceShip" type="Area3D"]
 script = ExtResource("1_rtukt")
-cowHoverBelow = -1.0
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 billboard = 2
