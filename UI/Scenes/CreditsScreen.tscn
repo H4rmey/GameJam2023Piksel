@@ -1,0 +1,67 @@
+[gd_scene load_steps=7 format=3 uid="uid://benrf3musn1u4"]
+
+[ext_resource type="Texture2D" uid="uid://dqvbrn7acgpve" path="res://UI/Sprites/UI_Background.png" id="1_2psm6"]
+[ext_resource type="Script" path="res://UI/Buttons.gd" id="1_wo71u"]
+[ext_resource type="Texture2D" uid="uid://jk7dkt3r21lw" path="res://UI/Sprites/UI_Block.png" id="2_xlgx8"]
+[ext_resource type="Texture2D" uid="uid://n5y0ogq7qdlm" path="res://UI/Sprites/Credits.png" id="3_vtyb3"]
+[ext_resource type="Texture2D" uid="uid://b7741djpfcg2q" path="res://UI/Sprites/Exit.png" id="5_tnwu8"]
+[ext_resource type="Texture2D" uid="uid://cxim0c4hed4gl" path="res://UI/Sprites/Back_Button.png" id="6_v8tgt"]
+
+[node name="CreditsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 768.0
+offset_bottom = 432.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wo71u")
+metadata/_edit_vertical_guides_ = [960.0]
+metadata/_edit_horizontal_guides_ = [540.0]
+
+[node name="BG" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(4, 4)
+texture = ExtResource("1_2psm6")
+
+[node name="BG2" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -848.0
+offset_top = 52.0
+offset_right = -616.0
+offset_bottom = 296.0
+grow_horizontal = 2
+scale = Vector2(4, 4)
+texture = ExtResource("2_xlgx8")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(960, 596)
+scale = Vector2(4, 4)
+texture = ExtResource("3_vtyb3")
+
+[node name="TextureButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 1340.0
+offset_top = 17.0
+offset_right = 1380.0
+offset_bottom = 57.0
+scale = Vector2(4, 4)
+texture_normal = ExtResource("5_tnwu8")
+
+[node name="BackButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 560.0
+offset_top = 903.0
+offset_right = 760.0
+offset_bottom = 943.0
+scale = Vector2(4, 4)
+texture_normal = ExtResource("6_v8tgt")
+
+[connection signal="pressed" from="TextureButton" to="." method="_on_texture_button_pressed"]
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]

@@ -45,18 +45,18 @@ public partial class SpaceShip : Area3D
 	private Node3D 	currentTarget;
 	public  Cow 	cowTarget;
 
-    public CharacterBody3D player;
-    private Array<Node3D> cows 				= new Array<Node3D>();
-    private Array<Node3D> cowsOriginal 		= new Array<Node3D>();
-    private Array<Node3D> endPoints 		= new Array<Node3D>();
-    private Array<Node3D> betweenPoints 	= new Array<Node3D>(); 
+	public CharacterBody3D player;
+	private Array<Node3D> cows 				= new Array<Node3D>();
+	private Array<Node3D> cowsOriginal 		= new Array<Node3D>();
+	private Array<Node3D> endPoints 		= new Array<Node3D>();
+	private Array<Node3D> betweenPoints 	= new Array<Node3D>(); 
 	
 	[Signal]
 	public delegate void OnPositionReachedEventHandler();	
 	
-    public override void _Ready()
-    {
-        player = GetNode<CharacterBody3D>(pathPlayer);
+	public override void _Ready()
+	{
+		player = GetNode<CharacterBody3D>(pathPlayer);
 
 		timer = new Timer(); 
 		AddChild(timer);
@@ -73,11 +73,11 @@ public partial class SpaceShip : Area3D
 		this.Connect(SignalName.OnPositionReached, new Callable(this, MethodName.ShipReachedDestination));	
 
 		timer.Start(0.1f);
-    }
+	}
 	
 
-    public override void _Process(double delta)
-    {
+	public override void _Process(double delta)
+	{
 		if (mustWait) {
 			return;
 		}
@@ -100,7 +100,7 @@ public partial class SpaceShip : Area3D
 			mustWait = true;
 			OnTimerTimeout();
 		}
-    }
+	}
 
 	private void ShipReachedDestination()
 	{
