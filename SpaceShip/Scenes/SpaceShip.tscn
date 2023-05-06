@@ -9,6 +9,8 @@ radius = 0.83077
 
 [node name="SpaceShip" type="Area3D"]
 script = ExtResource("1_rtukt")
+startDelay = 8.0
+hoverAmount = 0.1
 
 [node name="SpriteSpaceShip" type="Sprite3D" parent="."]
 billboard = 2

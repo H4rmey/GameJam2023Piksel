@@ -1,8 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://b8gj50b7hdxu8"]
+[gd_scene load_steps=8 format=3 uid="uid://b8gj50b7hdxu8"]
 
 [ext_resource type="Script" path="res://Player/Scripts/Player.cs" id="1"]
 [ext_resource type="Texture2D" uid="uid://ui8qxqxc2qmg" path="res://Player/Sprites/Bob1.png" id="2_qhh1n"]
 [ext_resource type="Script" path="res://Player/Scripts/Lasso.cs" id="3_idyi8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xl7f3"]
+albedo_color = Color(1, 0.788235, 0, 1)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_7mds1"]
 
@@ -18,7 +21,7 @@ script = ExtResource("1")
 lasso = NodePath("Lasso")
 speed = 5.0
 min_pitch = -30.0
-max_pitch = 30.0
+max_pitch = 45.0
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 texture_filter = 0
@@ -30,10 +33,12 @@ script = ExtResource("3_idyi8")
 lassoOrigin = NodePath("../LassoOrigin")
 lassoEnd = NodePath("../CameraPivot/CameraBoom/Camera/LassoEnd")
 raycast = NodePath("../CameraPivot/CameraBoom/Camera/RayCast3D")
+thickness = 0.3
 lassoThrowBackSpeed = 0.3
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Lasso"]
 transform = Transform3D(0.1, 0, 0, 0, 1, 0, 0, 0, 0.1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_xl7f3")
 mesh = SubResource("CylinderMesh_7mds1")
 
 [node name="LassoOrigin" type="Node3D" parent="."]
@@ -54,7 +59,7 @@ spring_length = 2.0
 transform = Transform3D(1, 0, 0, 0, 1, 1.49012e-08, 0, -1.49012e-08, 1, 0, 0, 0)
 
 [node name="LassoEnd" type="Node3D" parent="CameraPivot/CameraBoom/Camera"]
-transform = Transform3D(1, 0, 0, 0, 0.984808, -0.173648, 0, 0.173648, 0.984808, 0, 0, -10)
+transform = Transform3D(1, 0, 0, 0, 0.984808, -0.173648, 0, 0.173648, 0.984808, 0, 0.75, -8)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CameraPivot/CameraBoom/Camera/LassoEnd"]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)

@@ -7,7 +7,7 @@
 bounce = 0.5
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0exm6"]
-radius = 0.410384
+radius = 0.410383
 height = 0.820767
 
 [node name="Cow" type="RigidBody3D"]
@@ -17,7 +17,7 @@ gravity_scale = 0.5
 freeze_mode = 1
 script = ExtResource("1_1p54e")
 
-[node name="Sprite3D" type="Sprite3D" parent="."]
+[node name="SpriteCow" type="Sprite3D" parent="."]
 billboard = 2
 texture_filter = 0
 texture = ExtResource("1_5os6g")

@@ -1,13 +1,12 @@
 using Godot;
+using Godot.Collections;
 using System;
 
 public partial class Cow : RigidBody3D
 {
 	// are set int he spaceship
 	[Export]
-	public Area3D spaceShip;
-	[Export]
-	public SpaceShip spaceShipScript;
+	public SpaceShip spaceShip;
 	[Export]
 	public float speed;
 	[Export]
@@ -38,6 +37,22 @@ public partial class Cow : RigidBody3D
 		timer.Timeout 		+= OnTimerTimeout;
 
 		raycast = GetNode<RayCast3D>("RayCast3D");
+	
+		SetRandomCowSprite();
+	}
+
+	public void SetRandomCowSprite()
+	{
+		Sprite3D sprite = GetNode<Sprite3D>("SpriteCow");
+
+		Array<Texture2D> textures = new Array<Texture2D>();
+		textures.Add(ResourceLoader.Load<Texture2D>("res://Cows/Sprites/Cow1.png"));
+		textures.Add(ResourceLoader.Load<Texture2D>("res://Cows/Sprites/Cow2.png"));
+
+		RandomNumberGenerator random = new RandomNumberGenerator();
+		int nextIndex = random.RandiRange(0, textures.Count-1);
+
+		sprite.Texture = textures[nextIndex];
 	}
 
 	public override void _Process(double delta)
@@ -68,7 +83,7 @@ public partial class Cow : RigidBody3D
 		
 
 		//Vector3 direction = destination - this.GlobalPosition;
-		bool isAtDestination = (this.GlobalPosition.Y > spaceShip.GlobalPosition.Y-spaceShipScript.cowHoverBelow-0.1f); 
+		bool isAtDestination = (this.GlobalPosition.Y > spaceShip.GlobalPosition.Y-spaceShip.cowHoverBelow-0.1f); 
 		
 		if (isAtDestination)
 		{
@@ -78,13 +93,13 @@ public partial class Cow : RigidBody3D
 		else
 		{		
 			Vector3 direction = (destination - this.GlobalPosition) * 1; 
-			this.LinearVelocity = direction * spaceShipScript.cowPullForceMultiplier;
+			this.LinearVelocity = direction * spaceShip.cowPullForceMultiplier;
 			destination = new Vector3(spaceShip.GlobalPosition.X, spaceShip.GlobalPosition.Y, spaceShip.GlobalPosition.Z);
 		}
 
 		if (follow_ship)
 		{
-			this.GlobalPosition = spaceShipScript.sprite.GlobalPosition - new Vector3(0,spaceShipScript.cowHoverBelow,0);
+			this.GlobalPosition = spaceShip.sprite.GlobalPosition - new Vector3(0,spaceShip.cowHoverBelow,0);
 		}
 	}
 
@@ -97,12 +112,12 @@ public partial class Cow : RigidBody3D
 
 	private void _on_mouse_entered()
 	{
-		(spaceShipScript.player as Player).cowTarget = this;
+		(spaceShip.player as Player).cowTarget = this;
 	}
 
 	private void _on_mouse_exited()
 	{
-		(spaceShipScript.player as Player).cowTarget = null;
+		(spaceShip.player as Player).cowTarget = null;
 	}
 
 	private void _on_space_ship_body_entered(Node3D node)
@@ -127,7 +142,7 @@ public partial class Cow : RigidBody3D
 	{
 		Vector3 forceDirection = (location - this.GlobalPosition);
 
-		spaceShipScript.cowTarget = null;
+		spaceShip.cowTarget = null;
 
 		this.is_pulled 		= false;
 		this.follow_ship 	= false;

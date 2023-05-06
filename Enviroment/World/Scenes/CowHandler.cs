@@ -9,13 +9,15 @@ public partial class CowHandler : Node3D
 	[Export]
 	public Node3D pathCows;
 	[Export]
-	public NodePath pathSpawnpoints;
+	public Node3D pathSpawnpoints;
 	[Export]
-	public Area3D spaceShip;
+	public Node3D pathEndPoints;
 	[Export]
-	public SpaceShip spaceShipScript;
+	public Node3D pathBetweenPoints;
 	[Export]
 	public Player player;
+	[Export]
+	public Vector3 spaceShipSpawnPoint;
 	[Export]
 	public int level;
 	[Export]
@@ -30,22 +32,25 @@ public partial class CowHandler : Node3D
 	
 	private String debugText;
 	private Timer timer;
+	public SpaceShip spaceShip;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{		
+		level--;
+
 		timer = new Timer(); 
 		AddChild(timer);
 		timer.Autostart 	= true;
 		timer.OneShot 		= true;
-		timer.Timeout 		+= OnTimerTimeout;
+		timer.Timeout 		+= LeveUp;
 
-		for (int i = 0; i < GetNode<Node3D>(pathSpawnpoints).GetChildCount(); i++) 
+		for (int i = 0; i < pathSpawnpoints.GetChildCount(); i++) 
 		{
-			spwns.Add(GetNode<Node3D>(pathSpawnpoints).GetChild<Node3D>(i));
+			spwns.Add(pathSpawnpoints.GetChild<Node3D>(i));
  		}
 
-		SpawnCows();
+		LeveUp();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -59,26 +64,52 @@ public partial class CowHandler : Node3D
 		}
 	}
 
-	private void OnTimerTimeout()
-	{
-		LeveUp();
-	}
-
 	private void LeveUp()
 	{
 		level++;
-		RemoveCows();
+		if (spaceShip != null) {
+			spaceShip.QueueFree();
+			RemoveCows();
+		}
+
+		CreateSpaceShip();
 		SpawnCows();
-		spaceShipScript.Reset();
+		InitSpaceShip();
+
 		player.score = 0;
+	}
+
+	private void CreateSpaceShip()
+	{
+		// create spaceship
+		PackedScene shipScene 	= ResourceLoader.Load<PackedScene>("res://SpaceShip/Scenes/SpaceShip.tscn");
+		this.spaceShip			= (SpaceShip)shipScene.Instantiate();
+
+		// set some variables
+		this.spaceShip.player 				= this.player;
+		this.spaceShip.pathEndPoints 		= this.pathEndPoints;
+		this.spaceShip.pathBetweenPoints 	= this.pathBetweenPoints;
+
+		//get main scene and add spaceship
+		this.GetNode(".").AddChild(spaceShip);
+		this.spaceShip.GlobalPosition = spaceShipSpawnPoint;
+		this.spaceShip.InitMovePoints();
+	}
+
+	private void InitSpaceShip()
+	{
+		spaceShip.cows = this.cows;
+		spaceShip.Init();
 	}
 
 	private void RemoveCows()
 	{
-		foreach (Cow cow in spaceShipScript.cows)
+		foreach (Cow cow in spaceShip.cows)
 		{
 			cow.QueueFree();
 		}
+		spaceShip.cows.Clear();
+		this.cows.Clear();
 	}
 
 	private void SpawnCows()
@@ -96,7 +127,7 @@ public partial class CowHandler : Node3D
 		}
 		
 		RandomNumberGenerator random = new RandomNumberGenerator();
-
+		cows.Clear();
 		for (int i = 0; i < nofCows; i++) 
 		{
 			float randomHeight = random.RandfRange(3, 6);
@@ -104,8 +135,8 @@ public partial class CowHandler : Node3D
 			PackedScene cowScene 	= ResourceLoader.Load<PackedScene>("res://Cows/Scenes/Cow.tscn");
 			Cow cow 				= (Cow)cowScene.Instantiate();
 			cow.Name 				= "Cow_" + i;
-			cow.spaceShipScript 	= spaceShip as SpaceShip;
-			cow.spaceShip 			= spaceShip;
+			cow.spaceShip 			= this.spaceShip;
+			cows.Add(cow);
 			pathCows.AddChild(cow);		
 			cow.GlobalPosition 		= new Vector3(spwns[i].GlobalPosition.X, randomHeight, spwns[i].GlobalPosition.Z);	
 		}
@@ -116,12 +147,12 @@ public partial class CowHandler : Node3D
 	{
 		debugText = "";
 
-		add_to_debug_text("CowHandler - Level: " + this.level);
-		add_to_debug_text("CowHandler - nofCows: " + this.nofCows);
-		add_to_debug_text("Player - position: " + this.player.GlobalPosition);
-		add_to_debug_text("Player - score: " + this.player.score);
-		add_to_debug_text("Cows - amount: " + this.spaceShipScript.cows.Count);
-		add_to_debug_text("Cows - cowTarget: " + ((this.spaceShipScript.cowTarget != null) ? this.spaceShipScript.cowTarget.Name : "null"));
+		//add_to_debug_text("CowHandler - Level: " + this.level);
+		//add_to_debug_text("CowHandler - nofCows: " + this.nofCows);
+		//add_to_debug_text("Player - position: " + this.player.GlobalPosition);
+		//add_to_debug_text("Player - score: " + this.player.score);
+		//add_to_debug_text("Cows - amount: " + this.spaceShip.cows.Count);
+		//add_to_debug_text("Cows - cowTarget: " + ((this.spaceShip.cowTarget != null) ? this.spaceShip.cowTarget.Name : "null"));
 
 		text.Text = debugText;
 	}
@@ -130,12 +161,4 @@ public partial class CowHandler : Node3D
 	{
 		debugText = debugText + "\n" + a_text;
 	}
-	
-	private void SetCowScript(int i)
-	{
-		//set cow script
-		Cow cowScript = cows[i] as Cow;
-		cowScript.spaceShipScript = spaceShip as SpaceShip;
-		cowScript.spaceShip = spaceShip;
-	}	
 }
