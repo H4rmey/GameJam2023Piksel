@@ -10,7 +10,7 @@ radius = 0.83077
 [node name="SpaceShip" type="Area3D"]
 script = ExtResource("1_rtukt")
 
-[node name="Sprite3D" type="Sprite3D" parent="."]
+[node name="SpriteSpaceShip" type="Sprite3D" parent="."]
 billboard = 2
 texture_filter = 0
 texture = ExtResource("1_uk837")

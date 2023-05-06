@@ -57,7 +57,7 @@ scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_w2mne")
 animation = &"tutorial animation"
 autoplay = "tutorial animation"
-frame_progress = 0.0366628
+frame_progress = 0.861101
 
 [node name="GameButton" type="TextureButton" parent="."]
 offset_left = 711.0

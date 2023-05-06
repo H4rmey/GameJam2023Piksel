@@ -15,9 +15,11 @@ public partial class SpaceShip : Area3D
 	[Export]
 	public float cowHoverBelow = 1;
 	[Export]
-	public float cowPullForceMultiplier = 1;
-    [Export]
 	public float startDelay = 12f;
+	[Export]
+	public float hoverSpeed = 0.75f;
+	[Export]
+	public float hoverAmount = 0.2f;
 	
 	public String[] behaviour = {
 		"wait_1",
@@ -33,24 +35,28 @@ public partial class SpaceShip : Area3D
 	};
 
 	private Timer 	timer;
+	private Tween 	tweenHover;
 	public int 		event_id 			= 0;
+	public int 		currentNodeIndex    = 0;
 	public bool 	isAtDestination     = false;
 	public bool 	processNextEvent 	= false;
 	public bool 	mustWait 			= true;
 	public float 	wait_time    		= 2;
 	public float 	speed 				= 1;
-	public int 		currentNodeIndex;
+	public float 	cowPullForceMultiplier = 1;
 
 
 	public Vector3 destination;
 	public Node3D 	currentTarget;
-	public  Cow 	cowTarget;
+	public Cow 		cowTarget;
+	public Sprite3D sprite;
 
 	public CharacterBody3D player;
 	public Array<Node3D> cows 				= new Array<Node3D>();
 	public Array<Node3D> cowsOriginal 		= new Array<Node3D>();
 	public Array<Node3D> endPoints 		= new Array<Node3D>();
 	public Array<Node3D> betweenPoints 	= new Array<Node3D>(); 
+
 	
 	[Signal]
 	public delegate void OnPositionReachedEventHandler();	
@@ -59,12 +65,19 @@ public partial class SpaceShip : Area3D
 	{
 		player = GetNode<CharacterBody3D>(pathPlayer);
 
+		sprite = GetNode<Sprite3D>("SpriteSpaceShip");
+		tweenHover = GetTree().CreateTween();
+		tweenHover.SetLoops();
+		tweenHover.SetEase(Tween.EaseType.Out);
+		tweenHover.SetTrans(Tween.TransitionType.Quad);
+		tweenHover.TweenProperty(sprite, "position", new Vector3(sprite.Position.X, sprite.Position.Y-hoverAmount, sprite.Position.Z), hoverSpeed);
+		tweenHover.TweenProperty(sprite, "position", new Vector3(sprite.Position.X, sprite.Position.Y+hoverAmount, sprite.Position.Z), hoverSpeed);
+
 		timer = new Timer(); 
 		AddChild(timer);
 		timer.Autostart 	= true;
 		timer.OneShot 		= true;
 		timer.Timeout 		+= OnTimerTimeout;
-
 
 		this.Connect(SignalName.OnPositionReached, new Callable(this, MethodName.ShipReachedDestination));	
 		InitMovePoints();

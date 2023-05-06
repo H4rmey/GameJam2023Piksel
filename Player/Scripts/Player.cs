@@ -8,6 +8,10 @@ public partial class Player : CharacterBody3D
 	[Export]
 	public SpaceShip spaceShip;
 	[Export]
+	public Lasso lasso;
+	[Export]
+	float lassoRate = 1f;
+	[Export]
 	float speed = 20f;
 	[Export]
 	float acceleration = 15f;
@@ -36,11 +40,11 @@ public partial class Player : CharacterBody3D
 	private Camera3D camera;
 
 	public  Cow 		cowTarget;
-	public  RayCast3D 	raycast;
-	public  Vector3 	raycastTarget;
 
 	public int score;
 
+	public Timer lassoTimer;
+	public bool canLasso = true;
 
 	public override void _Ready() {
 		camera_pivot = GetNode<Node3D>("CameraPivot");
@@ -48,9 +52,18 @@ public partial class Player : CharacterBody3D
 
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 
-		raycast = camera.GetNode<RayCast3D>("RayCast3D");
+		lassoTimer = new Timer();
+		AddChild(lassoTimer);
+		lassoTimer.Autostart 	= true;
+		lassoTimer.OneShot 		= true;
+		lassoTimer.Timeout += OnLassoTimerTimeout;
 	}
 
+	public void OnLassoTimerTimeout()
+	{
+		canLasso = true;
+		//lasso.Visible = false;
+	}
 
 	public override void _Process(double delta) {
 		if (Input.IsActionJustPressed("ui_cancel")) {
@@ -61,15 +74,6 @@ public partial class Player : CharacterBody3D
 	public override void _PhysicsProcess(double delta) {
 		base._PhysicsProcess(delta);
 		handle_movement(delta);
-
-		if (raycast.GetCollider() as Node3D != null)
-		{
-			cowTarget = raycast.GetCollider() as Cow;
-		}
-		else
-		{
-			cowTarget = null;
-		}
 	}
 
 	public override void _Input(InputEvent @event) {
@@ -83,12 +87,6 @@ public partial class Player : CharacterBody3D
 			rotDeg.X -= motionEvent.Relative.Y * mouse_sensitivity;
 			rotDeg.X = Mathf.Clamp(rotDeg.X, min_pitch, max_pitch);
 			camera_pivot.RotationDegrees = rotDeg;
-		}
-
-		if (@event is InputEventMouseButton eventMouseButton && eventMouseButton.Pressed && eventMouseButton.ButtonIndex == MouseButton.Left)
-   		{
-			var from = camera.ProjectRayOrigin(eventMouseButton.Position);
-			var raycastTarget = from + camera.ProjectRayNormal(eventMouseButton.Position) * 10.0f;
 		}
 	}
 
@@ -124,16 +122,8 @@ public partial class Player : CharacterBody3D
 			textEdit.Visible = !textEdit.Visible;			
 		}
 
-		if (Input.IsActionJustPressed("jump")) {			
-			if (this.cowTarget == null) {
-				return;
-			}
-
-			cowTarget.CowIsPulled(this.GlobalPosition);
-
-			if (cowTarget.is_taken) {
-				score++;	
-			}
+		if (Input.IsActionJustPressed("jump") && !lasso.Visible) {			
+			lasso.thingy();
 		}
 		
 		velocity.Y = y_velocity;

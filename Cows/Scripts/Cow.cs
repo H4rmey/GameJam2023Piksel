@@ -40,12 +40,12 @@ public partial class Cow : RigidBody3D
 		raycast = GetNode<RayCast3D>("RayCast3D");
 	}
 
-    public override void _Process(double delta)
-    {
-        this.is_taken = this.is_pulled | this.follow_ship;
-    }
+	public override void _Process(double delta)
+	{
+		this.is_taken = this.is_pulled | this.follow_ship;
+	}
 
-    public override void _PhysicsProcess(double delta)
+	public override void _PhysicsProcess(double delta)
 	{
 		if (dumcowmode){
 			return;
@@ -84,7 +84,7 @@ public partial class Cow : RigidBody3D
 
 		if (follow_ship)
 		{
-			this.GlobalPosition = spaceShip.GlobalPosition - new Vector3(0,spaceShipScript.cowHoverBelow,0);
+			this.GlobalPosition = spaceShipScript.sprite.GlobalPosition - new Vector3(0,spaceShipScript.cowHoverBelow,0);
 		}
 	}
 

@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://x7nlc4feeiyh"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_vo1sh"]
+
+[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_omc7s"]
+albedo_color = Color(1, 1, 0, 1)
+albedo_texture = SubResource("NoiseTexture2D_vo1sh")
+
+[node name="Lasso" type="CSGCylinder3D"]
+material = SubResource("ORMMaterial3D_omc7s")
