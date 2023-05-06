@@ -16,40 +16,41 @@ public partial class SpaceShip : Area3D
 	public float cowHoverBelow = 1;
     [Export]
 	public float cowPullForceMultiplier = 1;
+    [Export]
+	public float startDelay = 12f;
 	
 	public String[] behaviour = {
-		"Wait_4",
-		"between_3",
-		"Wait_0.05",
-		"between_3",
-		"Wait_0.05",
-		"between_3",
-		"Wait_0.5",
-		"cow_1",
-		"wait_2",
-		"end_1",
-		"wait_2",
+		"wait_1",
+		"between_5",
+		"Wait_0.01",
+		"between_5",
+		"Wait_0.01",
+		"between_5",
+		"Wait_0.01",
+		"cow_2",
+		"wait_1",
+		"end_5",
 	};
 
 	private Timer 	timer;
-	private int 	event_id 			= 0;
-	private bool 	isAtDestination     = false;
-	private bool 	processNextEvent 	= false;
-	private bool 	mustWait 			= true;
-	private float 	wait_time    		= 2;
-	private float 	speed 				= 1;
-	private int 	currentNodeIndex;
+	public int 		event_id 			= 0;
+	public bool 	isAtDestination     = false;
+	public bool 	processNextEvent 	= false;
+	public bool 	mustWait 			= true;
+	public float 	wait_time    		= 2;
+	public float 	speed 				= 1;
+	public int 		currentNodeIndex;
 
 
-	private Vector3 destination;
-	private Node3D 	currentTarget;
+	public Vector3 destination;
+	public Node3D 	currentTarget;
 	public  Cow 	cowTarget;
 
 	public CharacterBody3D player;
-	private Array<Node3D> cows 				= new Array<Node3D>();
-	private Array<Node3D> cowsOriginal 		= new Array<Node3D>();
-	private Array<Node3D> endPoints 		= new Array<Node3D>();
-	private Array<Node3D> betweenPoints 	= new Array<Node3D>(); 
+	public Array<Node3D> cows 				= new Array<Node3D>();
+	public Array<Node3D> cowsOriginal 		= new Array<Node3D>();
+	public Array<Node3D> endPoints 		= new Array<Node3D>();
+	public Array<Node3D> betweenPoints 	= new Array<Node3D>(); 
 	
 	[Signal]
 	public delegate void OnPositionReachedEventHandler();	
@@ -65,14 +66,22 @@ public partial class SpaceShip : Area3D
 		timer.Timeout 		+= OnTimerTimeout;
 
 
+		this.Connect(SignalName.OnPositionReached, new Callable(this, MethodName.ShipReachedDestination));	
 		InitMovePoints();
+		Reset();
+	}
+
+	public void Reset()
+	{
+		timer.Stop();
+
+		event_id = 0;
+		GetCowsInScene();
 		CalculateNextEndPoint(betweenPoints);
 
 		this.GlobalPosition = endPoints[0].GlobalPosition;
-		
-		this.Connect(SignalName.OnPositionReached, new Callable(this, MethodName.ShipReachedDestination));	
 
-		timer.Start(0.1f);
+		timer.Start(startDelay);
 	}
 	
 
@@ -109,6 +118,7 @@ public partial class SpaceShip : Area3D
 	
 	private void OnTimerTimeout()
 	{
+		timer.Paused = true;
 		int event_id_next = event_id + 1;
 		int event_id_prev = event_id - 1;
 		if (event_id_prev < 0 )
@@ -125,45 +135,15 @@ public partial class SpaceShip : Area3D
 		}
 
 		String event_name 		= behaviour[event_id].Split('_')[0];
+		String event_name_next  = behaviour[event_id_next].Split('_')[0];
+		String event_name_prev  = behaviour[event_id_prev].Split('_')[0];
 		String t_speed 		    = behaviour[event_id].Split('_')[1];
 		speed 			        = (float) Convert.ToDouble(t_speed);
 		GD.Print("Ship: Timer is done! ", event_name);
 		
 		mustWait = false;
 
-		if (event_name == "start")
-		{
-			CalculateNextEndPoint(endPoints);
-		}
-		else if (event_name == "between")
-		{
-			CalculateNextEndPoint(betweenPoints);
-		}
-		else if (event_name == "cow")
-		{
-			CalculateNextEndPoint(cows);
-			cowTarget = currentTarget as Cow;
-			destination = new Vector3(destination.X, this.GlobalPosition.Y, destination.Z);
-		}
-		else if (event_name == "end")
-		{
-			CalculateNextEndPoint(endPoints);
-		}
-		else if (event_name == "wait")
-		{
-			String time	    = behaviour[event_id].Split('_')[1];
-			wait_time  	    = (float) Convert.ToDouble(time);
-			mustWait 		= true;
-
-			GD.Print("Ship: Timer Start! ", wait_time, " with multiplier: ", cowPullForceMultiplier);
-
-			timer.Start(wait_time);
-
-			
-		}
-
 		// look into the next event
-		String event_name_next = behaviour[event_id_next].Split('_')[0];
 		if (event_name == "cow" && event_name_next == "wait")
 		{
 			String time	    = behaviour[event_id_next].Split('_')[1];
@@ -173,7 +153,13 @@ public partial class SpaceShip : Area3D
 		}
 
 		// look into the previouse event
-		String event_name_prev = behaviour[event_id_prev].Split('_')[0];
+		if (event_name == "wait" && event_name_prev == "cow")
+		{
+			speed = speed + 1;	
+		}
+
+		// look into the previouse event
+		event_name_prev = behaviour[event_id_prev].Split('_')[0];
 		if (event_name == "wait" && event_name_prev == "end")
 		{
 			GD.Print("Ship: previous was <end> event, removing cow, if any");
@@ -197,13 +183,47 @@ public partial class SpaceShip : Area3D
 				GD.Print("Ship: removing cow failed: ", cowTarget);
 			}
 
-			if (cows.Count <= 0 )
+			if (cows.Count < 2 )
 			{
-				GD.Print("GAME OVER, YOU ARE BAD...");
+				GameOver();
 			}
 		}
+
+		if (event_name == "start")
+		{
+			CalculateNextEndPoint(endPoints);
+		}
+		else if (event_name == "between")
+		{
+			CalculateNextEndPoint(betweenPoints);
+		}
+		else if (event_name == "cow")
+		{
+			CalculateNextEndPoint(cows);
+			cowTarget = currentTarget as Cow;
+			destination = new Vector3(destination.X, this.GlobalPosition.Y, destination.Z);
+		}
+		else if (event_name == "end")
+		{
+			CalculateNextEndPoint(endPoints);
+		}
+		else if (event_name == "wait")
+		{
+			GD.Print("Ship: Timer Start! ", wait_time, " with multiplier: ", cowPullForceMultiplier);
+
+			mustWait 		= true;
+			timer.Start(speed);
+		}
+
 		 
 		event_id++;
+		timer.Paused = false;
+	}
+
+	public void GameOver()
+	{
+		GetTree().ReloadCurrentScene();
+		GD.Print("GAME OVER, YOU ARE BAD...");
 	}
 
 	private void CalculateNextEndPoint(Array<Node3D> nodes)
@@ -223,12 +243,16 @@ public partial class SpaceShip : Area3D
 		destination 		= nodes[nextIndex].GlobalPosition;
 	}
 
-	private void InitMovePoints()
+	private void GetCowsInScene()
 	{
 		for (int i = 0; i < GetNode<Node3D>(pathCows).GetChildCount(); i++) 
 		{
         	cows.Add(GetNode<Node3D>(pathCows).GetChild<Node3D>(i));
 		}
+	}
+
+	private void InitMovePoints()
+	{
 		for (int i = 0; i < GetNode<Node3D>(pathEndPoints).GetChildCount(); i++) {
 			endPoints.Add(GetNode<Node3D>(pathEndPoints).GetChild<Node3D>(i));
 			endPoints[i].Position = new Vector3(endPoints[i].Position.X, this.GlobalPosition.Y, endPoints[i].Position.Z);

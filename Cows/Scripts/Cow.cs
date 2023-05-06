@@ -17,6 +17,7 @@ public partial class Cow : RigidBody3D
 	public bool is_pulled 	= false;
 	public bool follow_ship = false;	
 	public bool checkFloor 	= true;
+	public bool is_taken    = false;
 
 	private Timer 		timer;
 	public  RayCast3D 	raycast;
@@ -38,6 +39,11 @@ public partial class Cow : RigidBody3D
 
 		raycast = GetNode<RayCast3D>("RayCast3D");
 	}
+
+    public override void _Process(double delta)
+    {
+        this.is_taken = this.is_pulled | this.follow_ship;
+    }
 
     public override void _PhysicsProcess(double delta)
 	{

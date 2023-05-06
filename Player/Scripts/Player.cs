@@ -39,6 +39,8 @@ public partial class Player : CharacterBody3D
 	public  RayCast3D 	raycast;
 	public  Vector3 	raycastTarget;
 
+	public int score;
+
 	public override void _Ready() {
 		camera_pivot = GetNode<Node3D>("CameraPivot");
 		camera = GetNode<Camera3D>("CameraPivot/CameraBoom/Camera");
@@ -123,6 +125,10 @@ public partial class Player : CharacterBody3D
 			}
 
 			cowTarget.CowIsPulled(this.GlobalPosition);
+
+			if (cowTarget.is_taken) {
+				score++;	
+			}
 		}
 		
 		if (Input.IsActionJustPressed("open_debug")) {			

@@ -10,14 +10,13 @@
 [ext_resource type="Texture2D" uid="uid://dktsyg1urg61s" path="res://Enviroment/World/Sprites/Rock1.png" id="10_pbpdr"]
 
 [sub_resource type="Environment" id="Environment_oembq"]
-volumetric_fog_enabled = true
 volumetric_fog_ambient_inject = 1.0
 
 [sub_resource type="FogMaterial" id="FogMaterial_8gy4i"]
-density = 2.0
+density = 0.7823
 albedo = Color(0.313726, 0.776471, 0.756863, 1)
-height_falloff = 1e-05
-edge_fade = 7.93215e-05
+height_falloff = 0.5
+edge_fade = 0.25
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_yv1xi"]
 
@@ -29,21 +28,21 @@ uv1_scale = Vector3(10, 10, 10)
 size = Vector2(0.25, 0.25)
 
 [sub_resource type="BoxShape3D" id="3"]
-size = Vector3(201.07, 0.002, 199.646)
+size = Vector3(129.725, 0.002, 111.284)
 
 [sub_resource type="SyntaxHighlighter" id="SyntaxHighlighter_mspgf"]
 
 [node name="World" type="Node3D"]
 
-[node name="CowHandler" type="Node3D" parent="." node_paths=PackedStringArray("text", "pathCows", "spaceShip", "player") groups=["Cows"]]
+[node name="CowHandler" type="Node3D" parent="." node_paths=PackedStringArray("text", "pathCows", "spaceShip", "spaceShipScript", "player") groups=["Cows"]]
 process_priority = -10
 script = ExtResource("2_b6obw")
 text = NodePath("../Control/DebugValues")
 pathCows = NodePath("_cows")
 pathSpawnpoints = NodePath("_spawnpoints")
 spaceShip = NodePath("../SpaceShip")
+spaceShipScript = NodePath("../SpaceShip")
 player = NodePath("../Player")
-level = 4
 
 [node name="_cows" type="Node3D" parent="CowHandler"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.593492, 0)
@@ -97,6 +96,7 @@ pathCows = NodePath("../CowHandler/_cows")
 pathEndPoints = NodePath("../_ShipTravelPointsEnd")
 pathBetweenPoints = NodePath("../_ShipTravelPoints")
 cowPullForceMultiplier = 0.25
+startDelay = 1.0
 
 [node name="_ShipTravelPoints" type="Node3D" parent="."]
 
@@ -137,6 +137,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.1342, 0, -0.128832)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.0391, 0, 7.85853)
 
 [node name="_ShipTravelPointsEnd" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8.18946, 0)
 
 [node name="End_1" type="Node3D" parent="_ShipTravelPointsEnd"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -90)
@@ -160,7 +161,8 @@ jump_power = 100.0
 environment = SubResource("Environment_oembq")
 
 [node name="FogVolume" type="FogVolume" parent="."]
-size = Vector3(41.207, 0.565534, 41.6908)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.116761, 0)
+shape = 4
 material = SubResource("FogMaterial_8gy4i")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -473,8 +475,11 @@ texture = ExtResource("10_pbpdr")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="DebugValues" type="TextEdit" parent="Control"]
 visible = false
