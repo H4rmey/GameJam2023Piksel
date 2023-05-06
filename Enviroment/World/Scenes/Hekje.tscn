@@ -1,9 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://blj8g4r2xuy4r"]
+[gd_scene load_steps=3 format=3 uid="uid://c3sge6q3ktl0j"]
 
 [ext_resource type="Texture2D" uid="uid://b75ykq7dbk56s" path="res://Enviroment/World/Sprites/Hekje.png" id="1_ofkun"]
 
-[node name="Hekje" type="Node3D"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_pxn2v"]
+size = Vector3(3.66965, 0.628107, 0.107357)
+
+[node name="Hekje" type="StaticBody3D"]
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 texture_filter = 0
 texture = ExtResource("1_ofkun")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_pxn2v")

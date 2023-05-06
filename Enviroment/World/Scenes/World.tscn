@@ -1,15 +1,20 @@
-[gd_scene load_steps=14 format=3 uid="uid://vwtsc8y8sj3y"]
+[gd_scene load_steps=15 format=3 uid="uid://vwtsc8y8sj3y"]
 
 [ext_resource type="Texture2D" uid="uid://bag407c1am5gn" path="res://Enviroment/World/Sprites/FloorTile.png" id="1_ch7ao"]
 [ext_resource type="PackedScene" uid="uid://b8gj50b7hdxu8" path="res://Player/Scenes/Player.tscn" id="1_q0mud"]
 [ext_resource type="Script" path="res://Enviroment/World/Scenes/CowHandler.cs" id="2_b6obw"]
 [ext_resource type="PackedScene" uid="uid://bjjiuptmrihtw" path="res://SpaceShip/Scenes/SpaceShip.tscn" id="5_j5hay"]
-[ext_resource type="PackedScene" path="res://Enviroment/World/Scenes/Hekje.tscn" id="6_ma0ga"]
+[ext_resource type="PackedScene" uid="uid://c3sge6q3ktl0j" path="res://Enviroment/World/Scenes/Hekje.tscn" id="6_ma0ga"]
 [ext_resource type="PackedScene" path="res://Enviroment/World/Scenes/Grass.tscn" id="8_e7tfh"]
 [ext_resource type="Texture2D" uid="uid://ditys0h3alhw7" path="res://Enviroment/World/Sprites/Grass 2.png" id="9_c1juw"]
 [ext_resource type="Texture2D" uid="uid://dktsyg1urg61s" path="res://Enviroment/World/Sprites/Rock1.png" id="10_pbpdr"]
 
+[sub_resource type="Environment" id="Environment_oembq"]
+volumetric_fog_enabled = true
+volumetric_fog_ambient_inject = 1.0
+
 [sub_resource type="FogMaterial" id="FogMaterial_8gy4i"]
+density = 2.0
 albedo = Color(0.313726, 0.776471, 0.756863, 1)
 height_falloff = 1e-05
 edge_fade = 7.93215e-05
@@ -82,7 +87,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.44397, -1.90735e-06, -1.03
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.17479, -3.8147e-06, -4.12807)
 
 [node name="SpaceShip" parent="." instance=ExtResource("5_j5hay")]
-transform = Transform3D(0.99446, 0, 0.105119, 0, 1, 0, -0.105119, 0, 0.99446, 0, 4, -27.532)
+transform = Transform3D(0.99446, 0, 0.105119, 0, 1, 0, -0.105119, 0, 0.99446, 0, 4, -95.4598)
 pathPlayer = NodePath("../Player")
 pathCows = NodePath("../CowHandler/_cows")
 pathEndPoints = NodePath("../_ShipTravelPointsEnd")
@@ -130,16 +135,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.0391, 0, 7.85853)
 [node name="_ShipTravelPointsEnd" type="Node3D" parent="."]
 
 [node name="End_1" type="Node3D" parent="_ShipTravelPointsEnd"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.96065, 4, -15.3703)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -90)
 
 [node name="End_2" type="Node3D" parent="_ShipTravelPointsEnd"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.3145, 4, 2.33346)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 90, 4, 0)
 
 [node name="End_3" type="Node3D" parent="_ShipTravelPointsEnd"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.119, 4, 16.2994)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 90)
 
 [node name="End_4" type="Node3D" parent="_ShipTravelPointsEnd"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.9323, 4, 2.21143)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -90, 4, 0)
 
 [node name="Player" parent="." node_paths=PackedStringArray("spaceShip") instance=ExtResource("1_q0mud")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.86865, 0)
@@ -147,9 +152,9 @@ spaceShip = NodePath("../SpaceShip")
 jump_power = 100.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_oembq")
 
 [node name="FogVolume" type="FogVolume" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.92128, -0.337461, 0.235373)
 size = Vector3(41.207, 0.565534, 41.6908)
 material = SubResource("FogMaterial_8gy4i")
 
