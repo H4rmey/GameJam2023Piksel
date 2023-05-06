@@ -15,6 +15,8 @@ physics_material_override = SubResource("PhysicsMaterial_kp38e")
 gravity_scale = 0.5
 freeze_mode = 1
 script = ExtResource("1_1p54e")
+speed = null
+timeToResetVelocity = null
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 billboard = 2

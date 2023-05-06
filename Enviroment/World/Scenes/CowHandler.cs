@@ -14,15 +14,15 @@ public partial class CowHandler : Node3D
 	[Export]
 	public int nofCows = 3;
 
-    private Array<Node3D> cows = new Array<Node3D>();
-    private Array<Node3D> spwns = new Array<Node3D>();
+	private Array<Node3D> cows = new Array<Node3D>();
+	private Array<Node3D> spwns = new Array<Node3D>();
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		for (int i = 0; i < GetNode<Node3D>(pathSpawnpoints).GetChildCount(); i++) 
 		{
-        	spwns.Add(GetNode<Node3D>(pathSpawnpoints).GetChild<Node3D>(i));
+			spwns.Add(GetNode<Node3D>(pathSpawnpoints).GetChild<Node3D>(i));
  		}
 
 		SpawnCows();

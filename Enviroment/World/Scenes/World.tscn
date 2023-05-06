@@ -1,12 +1,13 @@
-[gd_scene load_steps=14 format=3 uid="uid://vwtsc8y8sj3y"]
+[gd_scene load_steps=15 format=3 uid="uid://vwtsc8y8sj3y"]
 
 [ext_resource type="Texture2D" uid="uid://bag407c1am5gn" path="res://Enviroment/World/Sprites/FloorTile.png" id="1_ch7ao"]
 [ext_resource type="PackedScene" uid="uid://b8gj50b7hdxu8" path="res://Player/Scenes/Player.tscn" id="1_q0mud"]
 [ext_resource type="Script" path="res://Enviroment/World/Scenes/CowHandler.cs" id="2_b6obw"]
 [ext_resource type="PackedScene" uid="uid://bjjiuptmrihtw" path="res://SpaceShip/Scenes/SpaceShip.tscn" id="5_j5hay"]
-[ext_resource type="PackedScene" path="res://Enviroment/World/Scenes/Hekje.tscn" id="6_ma0ga"]
-[ext_resource type="PackedScene" path="res://Enviroment/World/Scenes/Grass.tscn" id="8_e7tfh"]
+[ext_resource type="PackedScene" uid="uid://blj8g4r2xuy4r" path="res://Enviroment/World/Scenes/Hekje.tscn" id="6_ma0ga"]
+[ext_resource type="PackedScene" uid="uid://ducfppmvjfyvn" path="res://Enviroment/World/Scenes/Grass.tscn" id="8_e7tfh"]
 [ext_resource type="Texture2D" uid="uid://ditys0h3alhw7" path="res://Enviroment/World/Sprites/Grass 2.png" id="9_c1juw"]
+[ext_resource type="Texture2D" uid="uid://cwmhc3mpa2lew" path="res://Enviroment/World/Sprites/Farm.png" id="9_p6h5n"]
 [ext_resource type="Texture2D" uid="uid://dktsyg1urg61s" path="res://Enviroment/World/Sprites/Rock1.png" id="10_pbpdr"]
 
 [sub_resource type="FogMaterial" id="FogMaterial_8gy4i"]
@@ -32,9 +33,7 @@ size = Vector3(201.07, 0.002, 199.646)
 process_priority = -10
 script = ExtResource("2_b6obw")
 pathCows = NodePath("_cows")
-pathSpawnpoints = NodePath("_spawnpoints")
 spaceShip = NodePath("../SpaceShip")
-level = 4
 
 [node name="_cows" type="Node3D" parent="CowHandler"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.593492, 0)
@@ -87,7 +86,6 @@ pathPlayer = NodePath("../Player")
 pathCows = NodePath("../CowHandler/_cows")
 pathEndPoints = NodePath("../_ShipTravelPointsEnd")
 pathBetweenPoints = NodePath("../_ShipTravelPoints")
-cowPullForceMultiplier = 0.25
 
 [node name="_ShipTravelPoints" type="Node3D" parent="."]
 
@@ -237,6 +235,24 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.66811, 0.295441, -11.3932)
 
 [node name="Hekje3" parent="_Enviroment/_HekWerk" instance=ExtResource("6_ma0ga")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.04829, 0.295441, -11.3932)
+
+[node name="Hekje31" parent="_Enviroment/_HekWerk" instance=ExtResource("6_ma0ga")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.80976, 0.295441, -17.1019)
+
+[node name="Hekje33" parent="_Enviroment/_HekWerk" instance=ExtResource("6_ma0ga")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.80375, 0.295441, -17.1019)
+
+[node name="Hekje34" parent="_Enviroment/_HekWerk" instance=ExtResource("6_ma0ga")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.8037, 0.295441, -17.1019)
+
+[node name="Hekje32" parent="_Enviroment/_HekWerk" instance=ExtResource("6_ma0ga")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.0142, 0.295441, -17.1019)
+
+[node name="Hekje29" parent="_Enviroment/_HekWerk" instance=ExtResource("6_ma0ga")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 8.51776, 0.295441, -13.3888)
+
+[node name="Hekje30" parent="_Enviroment/_HekWerk" instance=ExtResource("6_ma0ga")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 9.93531, 0.295441, -13.3888)
 
 [node name="Hekje17" parent="_Enviroment/_HekWerk" instance=ExtResource("6_ma0ga")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.63761, 0.295441, 12.22)
@@ -460,5 +476,12 @@ texture = ExtResource("10_pbpdr")
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.0889906, 0)
 texture_filter = 0
 texture = ExtResource("10_pbpdr")
+
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="Sprite3D" type="Sprite3D" parent="Node3D"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 9.61975, 2.77672, -15.7321)
+texture_filter = 0
+texture = ExtResource("9_p6h5n")
 
 [connection signal="OnPositionReached" from="SpaceShip" to="SpaceShip" method="_on_on_position_reached"]
