@@ -12,9 +12,9 @@ public partial class SpaceShip : Area3D
 	public NodePath pathEndPoints;
 	[Export]
 	public NodePath pathBetweenPoints;
-    [Export]
+	[Export]
 	public float cowHoverBelow = 1;
-    [Export]
+	[Export]
 	public float cowPullForceMultiplier = 1;
     [Export]
 	public float startDelay = 12f;
@@ -247,7 +247,7 @@ public partial class SpaceShip : Area3D
 	{
 		for (int i = 0; i < GetNode<Node3D>(pathCows).GetChildCount(); i++) 
 		{
-        	cows.Add(GetNode<Node3D>(pathCows).GetChild<Node3D>(i));
+			cows.Add(GetNode<Node3D>(pathCows).GetChild<Node3D>(i));
 		}
 	}
 

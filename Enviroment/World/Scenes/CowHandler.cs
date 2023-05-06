@@ -42,7 +42,7 @@ public partial class CowHandler : Node3D
 
 		for (int i = 0; i < GetNode<Node3D>(pathSpawnpoints).GetChildCount(); i++) 
 		{
-        	spwns.Add(GetNode<Node3D>(pathSpawnpoints).GetChild<Node3D>(i));
+			spwns.Add(GetNode<Node3D>(pathSpawnpoints).GetChild<Node3D>(i));
  		}
 
 		SpawnCows();

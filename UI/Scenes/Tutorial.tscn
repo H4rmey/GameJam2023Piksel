@@ -1,0 +1,70 @@
+[gd_scene load_steps=8 format=3 uid="uid://cd4shrks16c1y"]
+
+[ext_resource type="Texture2D" uid="uid://dqvbrn7acgpve" path="res://UI/Sprites/UI_Background.png" id="1_b6a0a"]
+[ext_resource type="Script" path="res://UI/Buttons.gd" id="1_lbw0p"]
+[ext_resource type="Texture2D" uid="uid://bn2wikvr8mf6q" path="res://UI/Sprites/tut_screen.png" id="3_08gmo"]
+[ext_resource type="Texture2D" uid="uid://chvtottp5ro6s" path="res://UI/Sprites/TT_Frame1.png" id="4_tdq52"]
+[ext_resource type="Texture2D" uid="uid://d4hcwycjmosdg" path="res://UI/Sprites/TT_Frame2.png" id="5_b6a5i"]
+[ext_resource type="Texture2D" uid="uid://t3cnvs63j3tp" path="res://UI/Sprites/Play_Button.png" id="6_ksxoa"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_w2mne"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_tdq52")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_b6a5i")
+}],
+"loop": true,
+"name": &"tutorial animation",
+"speed": 2.0
+}]
+
+[node name="Tutorial" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lbw0p")
+metadata/_edit_vertical_guides_ = [960.0]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(4, 4)
+texture = ExtResource("1_b6a0a")
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(4, 4)
+texture = ExtResource("3_08gmo")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(1196, 569)
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_w2mne")
+animation = &"tutorial animation"
+autoplay = "tutorial animation"
+frame_progress = 0.0366628
+
+[node name="GameButton" type="TextureButton" parent="."]
+offset_left = 711.0
+offset_top = 873.0
+offset_right = 911.0
+offset_bottom = 913.0
+scale = Vector2(2.5, 2.5)
+texture_normal = ExtResource("6_ksxoa")
+
+[connection signal="pressed" from="GameButton" to="." method="_on_game_button_pressed"]
