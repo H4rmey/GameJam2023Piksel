@@ -154,8 +154,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 90)
 [node name="End_4" type="Node3D" parent="_ShipTravelPointsEnd"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -90, 4, 0)
 
-[node name="Player" parent="." node_paths=PackedStringArray("spaceShip") instance=ExtResource("1_q0mud")]
+[node name="Player" parent="." node_paths=PackedStringArray("textEdit", "spaceShip") instance=ExtResource("1_q0mud")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.86865, 0)
+textEdit = NodePath("../Control/DebugValues")
 spaceShip = NodePath("../SpaceShip")
 jump_power = 100.0
 

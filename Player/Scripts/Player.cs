@@ -4,6 +4,8 @@ using System;
 public partial class Player : CharacterBody3D
 {
 	[Export]
+	public  TextEdit 	textEdit;
+	[Export]
 	public SpaceShip spaceShip;
 	[Export]
 	float speed = 20f;
@@ -38,6 +40,7 @@ public partial class Player : CharacterBody3D
 	public  Vector3 	raycastTarget;
 
 	public int score;
+
 
 	public override void _Ready() {
 		camera_pivot = GetNode<Node3D>("CameraPivot");
@@ -115,6 +118,10 @@ public partial class Player : CharacterBody3D
 		}
 		else {
 			y_velocity = Mathf.Clamp(y_velocity-gravity, -max_terminal_velocity, max_terminal_velocity);
+		}
+
+		if (Input.IsActionJustPressed("open_debug")) {			
+			textEdit.Visible = !textEdit.Visible;			
 		}
 
 		if (Input.IsActionJustPressed("jump")) {			
