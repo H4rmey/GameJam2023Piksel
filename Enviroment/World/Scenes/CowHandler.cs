@@ -25,8 +25,8 @@ public partial class CowHandler : Node3D
 	[Export]
 	public int levelUpTime = 3;
 
-    private Array<Node3D> cows = new Array<Node3D>();
-    private Array<Node3D> spwns = new Array<Node3D>();
+	private Array<Node3D> cows = new Array<Node3D>();
+	private Array<Node3D> spwns = new Array<Node3D>();
 	
 	private String debugText;
 	private Timer timer;

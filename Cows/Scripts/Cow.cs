@@ -40,12 +40,12 @@ public partial class Cow : RigidBody3D
 		raycast = GetNode<RayCast3D>("RayCast3D");
 	}
 
-    public override void _Process(double delta)
-    {
-        this.is_taken = this.is_pulled | this.follow_ship;
-    }
+	public override void _Process(double delta)
+	{
+		this.is_taken = this.is_pulled | this.follow_ship;
+	}
 
-    public override void _PhysicsProcess(double delta)
+	public override void _PhysicsProcess(double delta)
 	{
 		if (dumcowmode){
 			return;

@@ -1,20 +1,23 @@
-[gd_scene load_steps=17 format=3 uid="uid://vwtsc8y8sj3y"]
+[gd_scene load_steps=18 format=3 uid="uid://vwtsc8y8sj3y"]
 
 [ext_resource type="Texture2D" uid="uid://bag407c1am5gn" path="res://Enviroment/World/Sprites/FloorTile.png" id="1_ch7ao"]
 [ext_resource type="PackedScene" uid="uid://b8gj50b7hdxu8" path="res://Player/Scenes/Player.tscn" id="1_q0mud"]
 [ext_resource type="Script" path="res://Enviroment/World/Scenes/CowHandler.cs" id="2_b6obw"]
 [ext_resource type="PackedScene" uid="uid://bjjiuptmrihtw" path="res://SpaceShip/Scenes/SpaceShip.tscn" id="5_j5hay"]
-[ext_resource type="PackedScene" uid="uid://c3sge6q3ktl0j" path="res://Enviroment/World/Scenes/Hekje.tscn" id="6_ma0ga"]
-[ext_resource type="PackedScene" path="res://Enviroment/World/Scenes/Grass.tscn" id="8_e7tfh"]
+[ext_resource type="PackedScene" uid="uid://blj8g4r2xuy4r" path="res://Enviroment/World/Scenes/Hekje.tscn" id="6_ma0ga"]
+[ext_resource type="PackedScene" uid="uid://ducfppmvjfyvn" path="res://Enviroment/World/Scenes/Grass.tscn" id="8_e7tfh"]
 [ext_resource type="Texture2D" uid="uid://ditys0h3alhw7" path="res://Enviroment/World/Sprites/Grass 2.png" id="9_c1juw"]
 [ext_resource type="Texture2D" uid="uid://cwmhc3mpa2lew" path="res://Enviroment/World/Sprites/Farm.png" id="9_p6h5n"]
+[ext_resource type="Texture2D" uid="uid://ckppxbskvx5an" path="res://Enviroment/World/Sprites/tree_BG.png" id="10_emvmx"]
 [ext_resource type="Texture2D" uid="uid://dktsyg1urg61s" path="res://Enviroment/World/Sprites/Rock1.png" id="10_pbpdr"]
 
 [sub_resource type="Environment" id="Environment_oembq"]
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.01
 volumetric_fog_ambient_inject = 1.0
 
 [sub_resource type="FogMaterial" id="FogMaterial_8gy4i"]
-density = 0.7823
+density = 0.4179
 albedo = Color(0.313726, 0.776471, 0.756863, 1)
 height_falloff = 0.5
 edge_fade = 0.25
@@ -97,7 +100,6 @@ pathCows = NodePath("../CowHandler/_cows")
 pathEndPoints = NodePath("../_ShipTravelPointsEnd")
 pathBetweenPoints = NodePath("../_ShipTravelPoints")
 cowPullForceMultiplier = 0.25
-startDelay = 1.0
 
 [node name="_ShipTravelPoints" type="Node3D" parent="."]
 
@@ -251,16 +253,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.66811, 0.295441, -11.3932)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.04829, 0.295441, -11.3932)
 
 [node name="Hekje31" parent="_Enviroment/_HekWerk" instance=ExtResource("6_ma0ga")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.80976, 0.295441, -17.1019)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.80976, 0.295441, -19.4193)
 
 [node name="Hekje33" parent="_Enviroment/_HekWerk" instance=ExtResource("6_ma0ga")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.80375, 0.295441, -17.1019)
-
-[node name="Hekje34" parent="_Enviroment/_HekWerk" instance=ExtResource("6_ma0ga")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.8037, 0.295441, -17.1019)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.80375, 0.295441, -19.4193)
 
 [node name="Hekje32" parent="_Enviroment/_HekWerk" instance=ExtResource("6_ma0ga")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.0142, 0.295441, -17.1019)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.0142, 0.295441, -19.4193)
 
 [node name="Hekje29" parent="_Enviroment/_HekWerk" instance=ExtResource("6_ma0ga")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 8.51776, 0.295441, -13.3888)
@@ -491,12 +490,127 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.0
 texture_filter = 0
 texture = ExtResource("10_pbpdr")
 
-[node name="Node3D" type="Node3D" parent="."]
+[node name="Background_dressing" type="Node3D" parent="."]
 
-[node name="Sprite3D" type="Sprite3D" parent="Node3D"]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 9.61975, 2.77672, -15.7321)
+[node name="Sprite3D" type="Sprite3D" parent="Background_dressing"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 9.61975, 2.77672, -20.2258)
 texture_filter = 0
 texture = ExtResource("9_p6h5n")
+
+[node name="Sprite3D2" type="Sprite3D" parent="Background_dressing"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 9.61975, 3.93783, -36.578)
+texture_filter = 0
+texture = ExtResource("10_emvmx")
+
+[node name="Sprite3D23" type="Sprite3D" parent="Background_dressing"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 9.61975, 3.93783, -23.0011)
+texture_filter = 0
+texture = ExtResource("10_emvmx")
+
+[node name="Sprite3D24" type="Sprite3D" parent="Background_dressing"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 21.4432, 3.93783, -17.2586)
+texture_filter = 0
+texture = ExtResource("10_emvmx")
+
+[node name="Sprite3D3" type="Sprite3D" parent="Background_dressing"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -7.15521, 3.93783, -36.578)
+texture_filter = 0
+texture = ExtResource("10_emvmx")
+
+[node name="Sprite3D4" type="Sprite3D" parent="Background_dressing"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -22.5359, 3.93783, -36.578)
+texture_filter = 0
+texture = ExtResource("10_emvmx")
+
+[node name="Sprite3D5" type="Sprite3D" parent="Background_dressing"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -27.9936, 3.93783, -36.578)
+texture_filter = 0
+texture = ExtResource("10_emvmx")
+
+[node name="Sprite3D6" type="Sprite3D" parent="Background_dressing"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 26.0506, 3.93783, -36.578)
+texture_filter = 0
+texture = ExtResource("10_emvmx")
+
+[node name="Sprite3D13" type="Sprite3D" parent="Background_dressing"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 17.9215, 3.93783, 36.8487)
+texture_filter = 0
+texture = ExtResource("10_emvmx")
+
+[node name="Sprite3D14" type="Sprite3D" parent="Background_dressing"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 1.0148, 3.93783, 36.8487)
+texture_filter = 0
+texture = ExtResource("10_emvmx")
+
+[node name="Sprite3D15" type="Sprite3D" parent="Background_dressing"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -15.2483, 3.93783, 36.8487)
+texture_filter = 0
+texture = ExtResource("10_emvmx")
+
+[node name="Sprite3D16" type="Sprite3D" parent="Background_dressing"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -24.9313, 3.93783, 36.8487)
+texture_filter = 0
+texture = ExtResource("10_emvmx")
+
+[node name="Sprite3D17" type="Sprite3D" parent="Background_dressing"]
+transform = Transform3D(1, 0, -1.73205, 0, 2, 0, 1.73205, 0, 1, -32.5885, 3.93783, 29.3354)
+texture_filter = 0
+texture = ExtResource("10_emvmx")
+
+[node name="Sprite3D8" type="Sprite3D" parent="Background_dressing"]
+transform = Transform3D(-8.74228e-08, 0, -2, 0, 2, 0, 2, 0, -8.74228e-08, 35.9184, 3.93783, -17.7519)
+texture_filter = 0
+texture = ExtResource("10_emvmx")
+
+[node name="Sprite3D9" type="Sprite3D" parent="Background_dressing"]
+transform = Transform3D(-8.74228e-08, 0, -2, 0, 2, 0, 2, 0, -8.74228e-08, 35.9184, 3.93783, -1.17487)
+texture_filter = 0
+texture = ExtResource("10_emvmx")
+
+[node name="Sprite3D10" type="Sprite3D" parent="Background_dressing"]
+transform = Transform3D(-8.74228e-08, 0, -2, 0, 2, 0, 2, 0, -8.74228e-08, 35.9184, 3.93783, 13.8584)
+texture_filter = 0
+texture = ExtResource("10_emvmx")
+
+[node name="Sprite3D18" type="Sprite3D" parent="Background_dressing"]
+transform = Transform3D(-8.74228e-08, 0, -2, 0, 2, 0, 2, 0, -8.74228e-08, -36.1662, 3.93783, 13.8584)
+texture_filter = 0
+texture = ExtResource("10_emvmx")
+
+[node name="Sprite3D19" type="Sprite3D" parent="Background_dressing"]
+transform = Transform3D(-8.74228e-08, 0, -2, 0, 2, 0, 2, 0, -8.74228e-08, -36.1662, 3.93783, -2.57673)
+texture_filter = 0
+texture = ExtResource("10_emvmx")
+
+[node name="Sprite3D20" type="Sprite3D" parent="Background_dressing"]
+transform = Transform3D(-8.74228e-08, 0, -2, 0, 2, 0, 2, 0, -8.74228e-08, -36.1662, 3.93783, -19.321)
+texture_filter = 0
+texture = ExtResource("10_emvmx")
+
+[node name="Sprite3D21" type="Sprite3D" parent="Background_dressing"]
+transform = Transform3D(-8.74228e-08, 0, -2, 0, 2, 0, 2, 0, -8.74228e-08, -36.1662, 3.93783, -28.6106)
+texture_filter = 0
+texture = ExtResource("10_emvmx")
+
+[node name="Sprite3D22" type="Sprite3D" parent="Background_dressing"]
+transform = Transform3D(-1, 0, -1.73205, 0, 2, 0, 1.73205, 0, -1, -32.247, 3.93783, -27.173)
+texture_filter = 0
+texture = ExtResource("10_emvmx")
+
+[node name="Sprite3D11" type="Sprite3D" parent="Background_dressing"]
+transform = Transform3D(-8.74228e-08, 0, -2, 0, 2, 0, 2, 0, -8.74228e-08, 35.9184, 3.93783, 28.0807)
+texture_filter = 0
+texture = ExtResource("10_emvmx")
+
+[node name="Sprite3D12" type="Sprite3D" parent="Background_dressing"]
+transform = Transform3D(-1.41421, 0, -1.41421, 0, 2, 0, 1.41421, 0, -1.41421, 29.8159, 3.93783, 31.1212)
+texture_filter = 0
+texture = ExtResource("10_emvmx")
+
+[node name="Sprite3D7" type="Sprite3D" parent="Background_dressing"]
+transform = Transform3D(1.41421, 0, -1.41421, 0, 2, 0, 1.41421, 0, 1.41421, 31.3719, 3.93783, -31.2402)
+texture_filter = 0
+texture = ExtResource("10_emvmx")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3

@@ -16,7 +16,7 @@ public partial class SpaceShip : Area3D
 	public float cowHoverBelow = 1;
 	[Export]
 	public float cowPullForceMultiplier = 1;
-    [Export]
+	[Export]
 	public float startDelay = 12f;
 	
 	public String[] behaviour = {
