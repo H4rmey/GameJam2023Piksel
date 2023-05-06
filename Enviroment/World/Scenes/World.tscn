@@ -1,44 +1,13 @@
-[gd_scene load_steps=19 format=3 uid="uid://vwtsc8y8sj3y"]
+[gd_scene load_steps=14 format=3 uid="uid://vwtsc8y8sj3y"]
 
 [ext_resource type="Texture2D" uid="uid://bag407c1am5gn" path="res://Enviroment/World/Sprites/FloorTile.png" id="1_ch7ao"]
 [ext_resource type="PackedScene" uid="uid://b8gj50b7hdxu8" path="res://Player/Scenes/Player.tscn" id="1_q0mud"]
 [ext_resource type="Script" path="res://Enviroment/World/Scenes/CowHandler.cs" id="2_b6obw"]
-[ext_resource type="PackedScene" uid="uid://b8tbcdl2dafpv" path="res://Cows/Scenes/Cow.tscn" id="3_kxicp"]
 [ext_resource type="PackedScene" uid="uid://bjjiuptmrihtw" path="res://SpaceShip/Scenes/SpaceShip.tscn" id="5_j5hay"]
 [ext_resource type="PackedScene" path="res://Enviroment/World/Scenes/Hekje.tscn" id="6_ma0ga"]
-[ext_resource type="Texture2D" uid="uid://1a7gstvoxh7o" path="res://Enviroment/World/Sprites/Sky.png" id="7_1r5mh"]
 [ext_resource type="PackedScene" path="res://Enviroment/World/Scenes/Grass.tscn" id="8_e7tfh"]
 [ext_resource type="Texture2D" uid="uid://ditys0h3alhw7" path="res://Enviroment/World/Sprites/Grass 2.png" id="9_c1juw"]
 [ext_resource type="Texture2D" uid="uid://dktsyg1urg61s" path="res://Enviroment/World/Sprites/Rock1.png" id="10_pbpdr"]
-
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_gp1v8"]
-panorama = ExtResource("7_1r5mh")
-
-[sub_resource type="Sky" id="Sky_qj5m3"]
-sky_material = SubResource("PanoramaSkyMaterial_gp1v8")
-process_mode = 1
-radiance_size = 6
-
-[sub_resource type="Environment" id="Environment_lvl34"]
-background_mode = 2
-background_color = Color(0, 0.0588235, 0.164706, 1)
-sky = SubResource("Sky_qj5m3")
-ambient_light_source = 2
-ambient_light_color = Color(0, 0, 0.368627, 1)
-ambient_light_energy = 0.0
-reflected_light_source = 1
-tonemap_mode = 3
-ssr_enabled = true
-glow_intensity = 0.9
-fog_enabled = true
-fog_light_color = Color(0.429303, 0.549414, 0.57967, 1)
-fog_light_energy = 0.1
-fog_density = 0.0967
-fog_aerial_perspective = 0.326
-fog_sky_affect = 0.835
-fog_height = -0.01
-volumetric_fog_enabled = true
-volumetric_fog_density = 0.002
 
 [sub_resource type="FogMaterial" id="FogMaterial_8gy4i"]
 albedo = Color(0.313726, 0.776471, 0.756863, 1)
@@ -59,27 +28,66 @@ size = Vector3(201.07, 0.002, 199.646)
 
 [node name="World" type="Node3D"]
 
+[node name="CowHandler" type="Node3D" parent="." node_paths=PackedStringArray("pathCows", "spaceShip") groups=["Cows"]]
+process_priority = -10
+script = ExtResource("2_b6obw")
+pathCows = NodePath("_cows")
+pathSpawnpoints = NodePath("_spawnpoints")
+spaceShip = NodePath("../SpaceShip")
+level = 4
+
+[node name="_cows" type="Node3D" parent="CowHandler"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.593492, 0)
+
+[node name="_spawnpoints" type="Node3D" parent="CowHandler"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.82753, 0)
+
+[node name="spwn_1" type="Node3D" parent="CowHandler/_spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.47736, 0, 4.68639)
+
+[node name="spwn_2" type="Node3D" parent="CowHandler/_spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.70011, -1.90735e-06, -6.01276)
+
+[node name="spwn_3" type="Node3D" parent="CowHandler/_spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.74444, -1.90735e-06, 2.42223)
+
+[node name="spwn_4" type="Node3D" parent="CowHandler/_spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.94235, 0, 4.75864)
+
+[node name="spwn_5" type="Node3D" parent="CowHandler/_spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.17623, 1.90735e-06, -5.93404)
+
+[node name="spwn_6" type="Node3D" parent="CowHandler/_spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8067, 1.90735e-06, 5.13034)
+
+[node name="spwn_7" type="Node3D" parent="CowHandler/_spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.02369, 1.90735e-06, 8.24586)
+
+[node name="spwn_8" type="Node3D" parent="CowHandler/_spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.07444, 0, 8.71227)
+
+[node name="spwn_9" type="Node3D" parent="CowHandler/_spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.25877, -1.90735e-06, -8.4153)
+
+[node name="spwn_10" type="Node3D" parent="CowHandler/_spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.93543, -3.8147e-06, 4.66671)
+
+[node name="spwn_11" type="Node3D" parent="CowHandler/_spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.24697, -2.86102e-06, -0.545353)
+
+[node name="spwn_12" type="Node3D" parent="CowHandler/_spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.44397, -1.90735e-06, -1.0367)
+
+[node name="spwn_13" type="Node3D" parent="CowHandler/_spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.17479, -3.8147e-06, -4.12807)
+
 [node name="SpaceShip" parent="." instance=ExtResource("5_j5hay")]
-transform = Transform3D(0.99446, 0, 0.105119, 0, 1, 0, -0.105119, 0, 0.99446, 0, 4, -27.5321)
+transform = Transform3D(0.99446, 0, 0.105119, 0, 1, 0, -0.105119, 0, 0.99446, 0, 4, -27.532)
 pathPlayer = NodePath("../Player")
-pathCows = NodePath("../CowHandler")
+pathCows = NodePath("../CowHandler/_cows")
 pathEndPoints = NodePath("../_ShipTravelPointsEnd")
 pathBetweenPoints = NodePath("../_ShipTravelPoints")
-cowHoverBelow = 1.0
-
-[node name="CowHandler" type="Node3D" parent="." groups=["Cows"]]
-script = ExtResource("2_b6obw")
-pathCows = NodePath(".")
-
-[node name="Cow_1" parent="CowHandler" node_paths=PackedStringArray("spaceShip", "spaceShipScript") instance=ExtResource("3_kxicp")]
-transform = Transform3D(1.00006, 0, 0, 0, 1.00006, 0, 0, 0, 1.00006, -0.789533, 2.65728, -5.72887)
-spaceShip = NodePath("../../SpaceShip")
-spaceShipScript = NodePath("../../SpaceShip")
-
-[node name="Player" parent="." node_paths=PackedStringArray("spaceShip") instance=ExtResource("1_q0mud")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.86865, 0)
-spaceShip = NodePath("../SpaceShip")
-jump_power = 100.0
+cowPullForceMultiplier = 0.25
 
 [node name="_ShipTravelPoints" type="Node3D" parent="."]
 
@@ -122,19 +130,23 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.0391, 0, 7.85853)
 [node name="_ShipTravelPointsEnd" type="Node3D" parent="."]
 
 [node name="End_1" type="Node3D" parent="_ShipTravelPointsEnd"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.238, 4, -38.033)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.96065, 4, -15.3703)
 
 [node name="End_2" type="Node3D" parent="_ShipTravelPointsEnd"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.69, 4, -0.238)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.3145, 4, 2.33346)
 
 [node name="End_3" type="Node3D" parent="_ShipTravelPointsEnd"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.119, 4, 31.714)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.119, 4, 16.2994)
 
 [node name="End_4" type="Node3D" parent="_ShipTravelPointsEnd"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48.406, 4, -0.119)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.9323, 4, 2.21143)
+
+[node name="Player" parent="." node_paths=PackedStringArray("spaceShip") instance=ExtResource("1_q0mud")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.86865, 0)
+spaceShip = NodePath("../SpaceShip")
+jump_power = 100.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_lvl34")
 
 [node name="FogVolume" type="FogVolume" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.92128, -0.337461, 0.235373)
@@ -149,6 +161,8 @@ shadow_enabled = true
 [node name="_Enviroment" type="Node3D" parent="."]
 
 [node name="_Flooring" type="StaticBody3D" parent="_Enviroment"]
+collision_layer = 9
+input_ray_pickable = false
 physics_material_override = SubResource("PhysicsMaterial_yv1xi")
 
 [node name="MeshInstance" type="MeshInstance3D" parent="_Enviroment/_Flooring"]
@@ -448,5 +462,3 @@ texture_filter = 0
 texture = ExtResource("10_pbpdr")
 
 [connection signal="OnPositionReached" from="SpaceShip" to="SpaceShip" method="_on_on_position_reached"]
-[connection signal="body_entered" from="SpaceShip" to="CowHandler/Cow_1" method="_on_space_ship_body_entered"]
-[connection signal="body_exited" from="SpaceShip" to="CowHandler/Cow_1" method="_on_space_ship_body_exited"]

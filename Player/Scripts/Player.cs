@@ -116,7 +116,7 @@ public partial class Player : CharacterBody3D
 		}
 
 		if (Input.IsActionJustPressed("jump")) {			
-			if (spaceShip.cowTarget == null) {
+			if (this.cowTarget == null) {
 				return;
 			}
 

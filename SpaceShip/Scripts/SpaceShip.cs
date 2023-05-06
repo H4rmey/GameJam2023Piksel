@@ -13,27 +13,22 @@ public partial class SpaceShip : Area3D
 	[Export]
 	public NodePath pathBetweenPoints;
     [Export]
-	public double speedToEnd = 5;
-    [Export]
-	public double speedToCow = 3;
-    [Export]
-	public double speedToBetween = 0.5f;
-
-    [Export]
-	public double holdTimeCow = 5;
-    [Export]
-	public double holdTimeEnd = 3;
-    [Export]
-	public double holdTimeBetween = 0.5f;
-    [Export]
 	public float cowHoverBelow = 1;
+    [Export]
+	public float cowPullForceMultiplier = 1;
 	
 	public String[] behaviour = {
-		"start_2",
+		"Wait_4",
+		"between_3",
+		"Wait_0.05",
+		"between_3",
+		"Wait_0.05",
+		"between_3",
+		"Wait_0.5",
 		"cow_1",
-		"wait_3",
+		"wait_2",
 		"end_1",
-		"wait_8",
+		"wait_2",
 	};
 
 	private Timer 	timer;
@@ -96,7 +91,7 @@ public partial class SpaceShip : Area3D
 		}
 		else if (!isAtDestination)
  		{
-			Position = Position.Lerp(destination, (float)delta*speed);
+			this.GlobalPosition = this.GlobalPosition.Slerp(destination, (float)delta*speed);
 		}
 
 		if (processNextEvent)
@@ -114,9 +109,19 @@ public partial class SpaceShip : Area3D
 	
 	private void OnTimerTimeout()
 	{
+		int event_id_next = event_id + 1;
+		int event_id_prev = event_id - 1;
+		if (event_id_prev < 0 )
+		{
+			event_id_prev = behaviour.Length-1;
+		}
 		if (event_id >= behaviour.Length )
 		{
 			event_id=0;	
+		}
+		if (event_id_next >= behaviour.Length )
+		{
+			event_id_next = 0;
 		}
 
 		String event_name 		= behaviour[event_id].Split('_')[0];
@@ -150,9 +155,52 @@ public partial class SpaceShip : Area3D
 			wait_time  	    = (float) Convert.ToDouble(time);
 			mustWait 		= true;
 
-			GD.Print("Ship: Timer Start! ", wait_time);
+			GD.Print("Ship: Timer Start! ", wait_time, " with multiplier: ", cowPullForceMultiplier);
 
 			timer.Start(wait_time);
+
+			
+		}
+
+		// look into the next event
+		String event_name_next = behaviour[event_id_next].Split('_')[0];
+		if (event_name == "cow" && event_name_next == "wait")
+		{
+			String time	    = behaviour[event_id_next].Split('_')[1];
+			wait_time  	    = (float) Convert.ToDouble(time);
+			cowPullForceMultiplier = 1-(wait_time/(this.GlobalPosition.Y-cowHoverBelow));
+			GD.Print("Ship: next is <wait> event: cowPullForceMultiplier: ", cowPullForceMultiplier, " ----- ", wait_time);
+		}
+
+		// look into the previouse event
+		String event_name_prev = behaviour[event_id_prev].Split('_')[0];
+		if (event_name == "wait" && event_name_prev == "end")
+		{
+			GD.Print("Ship: previous was <end> event, removing cow, if any");
+			if (cowTarget != null)
+			{
+				Array<Node3D> targets = FindCowsInRange(cows, 4);
+				foreach (Node3D c in targets)
+				{
+					Cow cow = c as Cow;
+
+					cows.Remove(cowTarget);
+						
+					cow.dumcowmode = true;
+					cow.QueueFree();
+
+					GD.Print("Ship: removed cow: ", cowTarget.Name);
+				}
+			}
+			else
+			{
+				GD.Print("Ship: removing cow failed: ", cowTarget);
+			}
+
+			if (cows.Count <= 0 )
+			{
+				GD.Print("GAME OVER, YOU ARE BAD...");
+			}
 		}
 		 
 		event_id++;
@@ -180,8 +228,6 @@ public partial class SpaceShip : Area3D
 		for (int i = 0; i < GetNode<Node3D>(pathCows).GetChildCount(); i++) 
 		{
         	cows.Add(GetNode<Node3D>(pathCows).GetChild<Node3D>(i));
-        	cowsOriginal.Add(GetNode<Node3D>(pathCows).GetChild<Node3D>(i));
-			SetCowScript(i);
 		}
 		for (int i = 0; i < GetNode<Node3D>(pathEndPoints).GetChildCount(); i++) {
 			endPoints.Add(GetNode<Node3D>(pathEndPoints).GetChild<Node3D>(i));
@@ -212,12 +258,18 @@ public partial class SpaceShip : Area3D
 		return true;
 	}
 
-	private void SetCowScript(int i)
+	private Array<Node3D> FindCowsInRange(Array<Node3D> nodes, float range)
 	{
-		//set cow script
-		Cow cowScript = cows[i] as Cow;
-		cowScript.spaceShipScript = this as SpaceShip;
-		cowScript.spaceShip = this;
-	}
-	
+		Array<Node3D> ret_nodes = new Array<Node3D>();
+		foreach (Node3D n in nodes)
+		{
+			float l = this.GlobalPosition.DistanceTo(n.GlobalPosition);
+			if (l <= range)
+			{
+				range = l;
+				ret_nodes.Add(n);
+			}
+		}
+		return ret_nodes;
+	}	
 }

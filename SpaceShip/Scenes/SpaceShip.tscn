@@ -4,12 +4,11 @@
 [ext_resource type="Texture2D" uid="uid://d3uif44sdfrd5" path="res://SpaceShip/Sprites/SpaceShip.png" id="1_uk837"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_olaby"]
-height = 12.8531
+height = 13.748
 radius = 0.83077
 
 [node name="SpaceShip" type="Area3D"]
 script = ExtResource("1_rtukt")
-cowHoverBelow = -1.0
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 billboard = 2

@@ -12,18 +12,18 @@ public partial class Cow : RigidBody3D
 	public float speed;
 	[Export]
 	public float timeToResetVelocity = 4;
+	
+	public bool dumcowmode 	= false;
+	public bool is_pulled 	= false;
+	public bool follow_ship = false;	
+	public bool checkFloor 	= true;
 
-	public bool is_pulled = false;
-	public bool follow_ship = false;
-
-	public Vector3 destination;
-
-	private Timer timer;
+	private Timer 		timer;
+	public  RayCast3D 	raycast;
+	public  Vector3 	destination;
 
 	public override void _Ready()
 	{
-		spaceShipScript = spaceShip as SpaceShip;
-
 		spaceShip.BodyEntered += _on_space_ship_body_entered;
 		spaceShip.BodyExited  += _on_space_ship_body_exited;
 
@@ -35,18 +35,35 @@ public partial class Cow : RigidBody3D
 		timer.Autostart 	= true;
 		timer.OneShot 		= true;
 		timer.Timeout 		+= OnTimerTimeout;
+
+		raycast = GetNode<RayCast3D>("RayCast3D");
 	}
 
-	public override void _PhysicsProcess(double delta)
+    public override void _PhysicsProcess(double delta)
 	{
+		if (dumcowmode){
+			return;
+		}
+		
+		if (raycast.GetCollider() as Node3D != null && checkFloor)
+		{
+			checkFloor = false;
+			timer.Start(3);
+		}		
+		else
+		{
+			checkFloor = true;
+		}
+
+
 		if (!is_pulled) {
 			return;
 		}
 		
 
 		//Vector3 direction = destination - this.GlobalPosition;
-		bool isAtDestination = CheckPosition(this.GlobalPosition, destination, 0.1f, false);
-
+		bool isAtDestination = (this.GlobalPosition.Y > spaceShip.GlobalPosition.Y-spaceShipScript.cowHoverBelow-0.1f); 
+		
 		if (isAtDestination)
 		{
 			SetLockedMode(true);
@@ -55,13 +72,13 @@ public partial class Cow : RigidBody3D
 		else
 		{		
 			Vector3 direction = (destination - this.GlobalPosition) * 1; 
-			this.LinearVelocity = direction;
+			this.LinearVelocity = direction * spaceShipScript.cowPullForceMultiplier;
 			destination = new Vector3(spaceShip.GlobalPosition.X, spaceShip.GlobalPosition.Y, spaceShip.GlobalPosition.Z);
 		}
 
 		if (follow_ship)
 		{
-			this.Position = spaceShip.GlobalPosition - new Vector3(0,spaceShipScript.cowHoverBelow,0);
+			this.GlobalPosition = spaceShip.GlobalPosition - new Vector3(0,spaceShipScript.cowHoverBelow,0);
 		}
 	}
 
@@ -82,13 +99,12 @@ public partial class Cow : RigidBody3D
 		(spaceShipScript.player as Player).cowTarget = null;
 	}
 
-
 	private void _on_space_ship_body_entered(Node3D node)
 	{
 		if (node == this)
 		{
 			GD.Print("Moooo!");
-			this.is_pulled 		= true;
+			this.is_pulled = true;
 		} 
 	}
 
@@ -98,13 +114,14 @@ public partial class Cow : RigidBody3D
 		{
 			GD.Print("Moooo?");
 			this.is_pulled = false;
-			node = null;
 		}
 	}
 
 	public void CowIsPulled(Vector3 location)
 	{
 		Vector3 forceDirection = (location - this.GlobalPosition);
+
+		spaceShipScript.cowTarget = null;
 
 		this.is_pulled 		= false;
 		this.follow_ship 	= false;
@@ -126,22 +143,13 @@ public partial class Cow : RigidBody3D
 
 	private bool CheckPosition(Vector3 v1, Vector3 v2, float sensitivity,bool enable_hight = true)
 	{
-		if (v1.X > v2.X - sensitivity && v1.X < v2.X + sensitivity) { }
-		else 
-		{
-			return false;	
-		}
-		if (v1.Z > v2.Z - sensitivity && v1.Z < v2.Z + sensitivity) { }
-		else 
-		{
-			return false;	
-		}
-		if (v1.Z > v2.Z - sensitivity && v1.Z < v2.Z + sensitivity && !enable_hight) { }
-		else 
+		if (v1.X > v2.X - sensitivity && v1.X < v2.X + sensitivity
+		&&  v1.Z > v2.Z - sensitivity && v1.Z < v2.Z + sensitivity
+		&&  v1.Z > v2.Z - sensitivity && v1.Z < v2.Z + sensitivity)
 		{ 
-			return false;	
+			return true;	
 		}
 		
-		return true;
+		return false;
 	}
 }
