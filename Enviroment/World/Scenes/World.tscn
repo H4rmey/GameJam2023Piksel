@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://vwtsc8y8sj3y"]
+[gd_scene load_steps=16 format=3 uid="uid://vwtsc8y8sj3y"]
 
 [ext_resource type="Texture2D" uid="uid://bag407c1am5gn" path="res://Enviroment/World/Sprites/FloorTile.png" id="1_ch7ao"]
 [ext_resource type="PackedScene" uid="uid://b8gj50b7hdxu8" path="res://Player/Scenes/Player.tscn" id="1_q0mud"]
@@ -31,14 +31,18 @@ size = Vector2(0.25, 0.25)
 [sub_resource type="BoxShape3D" id="3"]
 size = Vector3(201.07, 0.002, 199.646)
 
+[sub_resource type="SyntaxHighlighter" id="SyntaxHighlighter_mspgf"]
+
 [node name="World" type="Node3D"]
 
-[node name="CowHandler" type="Node3D" parent="." node_paths=PackedStringArray("pathCows", "spaceShip") groups=["Cows"]]
+[node name="CowHandler" type="Node3D" parent="." node_paths=PackedStringArray("text", "pathCows", "spaceShip", "player") groups=["Cows"]]
 process_priority = -10
 script = ExtResource("2_b6obw")
+text = NodePath("../Control/DebugValues")
 pathCows = NodePath("_cows")
 pathSpawnpoints = NodePath("_spawnpoints")
 spaceShip = NodePath("../SpaceShip")
+player = NodePath("../Player")
 level = 4
 
 [node name="_cows" type="Node3D" parent="CowHandler"]
@@ -146,8 +150,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 90)
 [node name="End_4" type="Node3D" parent="_ShipTravelPointsEnd"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -90, 4, 0)
 
-[node name="Player" parent="." node_paths=PackedStringArray("spaceShip") instance=ExtResource("1_q0mud")]
+[node name="Player" parent="." node_paths=PackedStringArray("debugWindow", "spaceShip") instance=ExtResource("1_q0mud")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.86865, 0)
+debugWindow = NodePath("../Control/DebugValues")
 spaceShip = NodePath("../SpaceShip")
 jump_power = 100.0
 
@@ -465,5 +470,18 @@ texture = ExtResource("10_pbpdr")
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.0889906, 0)
 texture_filter = 0
 texture = ExtResource("10_pbpdr")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="DebugValues" type="TextEdit" parent="Control"]
+visible = false
+layout_mode = 0
+offset_right = 519.0
+offset_bottom = 1077.0
+theme_override_colors/background_color = Color(0, 0, 0, 0)
+syntax_highlighter = SubResource("SyntaxHighlighter_mspgf")
 
 [connection signal="OnPositionReached" from="SpaceShip" to="SpaceShip" method="_on_on_position_reached"]

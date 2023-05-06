@@ -4,6 +4,8 @@ using System;
 public partial class Player : CharacterBody3D
 {
 	[Export]
+	public TextEdit debugWindow;
+	[Export]
 	public SpaceShip spaceShip;
 	[Export]
 	float speed = 20f;
@@ -123,6 +125,10 @@ public partial class Player : CharacterBody3D
 			cowTarget.CowIsPulled(this.GlobalPosition);
 		}
 		
+		if (Input.IsActionJustPressed("open_debug")) {			
+			debugWindow.Visible = !debugWindow.Visible;
+			GD.Print("pressed");
+		}
 		velocity.Y = y_velocity;
 		MoveAndSlide();
 		this.Velocity = velocity;

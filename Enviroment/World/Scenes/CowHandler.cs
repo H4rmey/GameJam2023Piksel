@@ -1,8 +1,11 @@
 using Godot;
 using Godot.Collections;
+using System;
 
 public partial class CowHandler : Node3D
 {
+	[Export]
+	public TextEdit text;
 	[Export]
 	public Node3D pathCows;
 	[Export]
@@ -10,12 +13,16 @@ public partial class CowHandler : Node3D
 	[Export]
 	public Area3D spaceShip;
 	[Export]
+	public Player player;
+	[Export]
 	public int level;
 	[Export]
 	public int nofCows = 3;
 
     private Array<Node3D> cows = new Array<Node3D>();
     private Array<Node3D> spwns = new Array<Node3D>();
+	
+	private String debugText;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -61,6 +68,17 @@ public partial class CowHandler : Node3D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		debugText = "";
+
+		add_to_debug_text("Level: " + this.level);
+		add_to_debug_text("Player - position: " + this.player.GlobalPosition);
+
+		text.Text = debugText;
+	}
+
+	public void add_to_debug_text(String a_text)
+	{
+		debugText = debugText + "\n" + a_text;
 	}
 	
 	private void SetCowScript(int i)
