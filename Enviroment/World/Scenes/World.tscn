@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://b8gj50b7hdxu8" path="res://Player/Scenes/Player.tscn" id="1_q0mud"]
 [ext_resource type="Script" path="res://Enviroment/World/Scenes/CowHandler.cs" id="2_b6obw"]
 [ext_resource type="PackedScene" uid="uid://c3sge6q3ktl0j" path="res://Enviroment/World/Scenes/Hekje.tscn" id="6_ma0ga"]
-[ext_resource type="PackedScene" path="res://Enviroment/World/Scenes/Grass.tscn" id="8_e7tfh"]
+[ext_resource type="PackedScene" uid="uid://ducfppmvjfyvn" path="res://Enviroment/World/Scenes/Grass.tscn" id="8_e7tfh"]
 [ext_resource type="Texture2D" uid="uid://ditys0h3alhw7" path="res://Enviroment/World/Sprites/Grass 2.png" id="9_c1juw"]
 [ext_resource type="Texture2D" uid="uid://cwmhc3mpa2lew" path="res://Enviroment/World/Sprites/Farm.png" id="9_p6h5n"]
 [ext_resource type="FontFile" uid="uid://bi70nipdhe8k" path="res://UI/Fonts/8-bit-pusab.ttf" id="10_6778n"]
@@ -56,7 +56,6 @@ pathSpawnpoints = NodePath("_spawnpoints")
 pathEndPoints = NodePath("../_ShipTravelPointsEnd")
 pathBetweenPoints = NodePath("../_ShipTravelPoints")
 player = NodePath("../Player")
-spaceShipSpawnPoint = Vector3(-90, 4, 0)
 textureLevelUp = NodePath("../Control/TextureLevelUp")
 labelLevelUp = NodePath("../Control/TextureLevelUp/LabelLevelUp")
 labelGameOver = NodePath("../Control/LabelGameOver")
@@ -164,6 +163,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -90, 4, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.86865, 0)
 textEdit = NodePath("../Control/DebugValues")
 spaceShip = NodePath("")
+lassoRate = 1.0
 speed = 2.5
 jump_power = 100.0
 

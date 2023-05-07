@@ -79,8 +79,8 @@ public partial class CowHandler : Node3D
 		LeveUp();
 	}
 
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _Process(double delta)
+	// Called every frame. 'delta' is the elapsed time since the previous frame.
+	public override void _Process(double delta)
 	{
 		update_debug_information();
 
@@ -90,10 +90,10 @@ public partial class CowHandler : Node3D
 		}
 	}
 
-    private void OnLevelUpLabelChange()
-    {
+	private void OnLevelUpLabelChange()
+	{
 		textureLevelUp.Visible = false;
-    }
+	}
 
 
 	private void LeveUp()

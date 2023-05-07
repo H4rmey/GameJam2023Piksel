@@ -60,6 +60,7 @@ autoplay = "tutorial animation"
 frame_progress = 0.861101
 
 [node name="GameButton" type="TextureButton" parent="."]
+layout_mode = 0
 offset_left = 711.0
 offset_top = 873.0
 offset_right = 911.0

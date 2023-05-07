@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://crwgtl475v8qw"]
+[gd_scene load_steps=7 format=3 uid="uid://crwgtl475v8qw"]
 
 [ext_resource type="Script" path="res://UI/Buttons.gd" id="1_00pdw"]
 [ext_resource type="Texture2D" uid="uid://dqvbrn7acgpve" path="res://UI/Sprites/UI_Background.png" id="1_5fg21"]
-[ext_resource type="Texture2D" uid="uid://jk7dkt3r21lw" path="res://UI/Sprites/UI_Block.png" id="2_wviyb"]
+[ext_resource type="Texture2D" uid="uid://b2qkw5k1lyew6" path="res://UI/Sprites/blanco.png" id="3_ssvc7"]
 [ext_resource type="Texture2D" uid="uid://b7741djpfcg2q" path="res://UI/Sprites/Exit.png" id="4_6man5"]
 [ext_resource type="Texture2D" uid="uid://cxim0c4hed4gl" path="res://UI/Sprites/Back_Button.png" id="5_80pno"]
+[ext_resource type="Texture2D" uid="uid://c27rbh52rcewc" path="res://UI/Sprites/comic.png" id="6_iet6b"]
 
 [node name="CreditsScreen" type="Control"]
 layout_mode = 3
@@ -31,31 +32,7 @@ offset_top = 52.0
 offset_right = 729.0
 offset_bottom = 296.0
 scale = Vector2(4, 4)
-texture = ExtResource("2_wviyb")
-
-[node name="Label" type="Label" parent="."]
-layout_mode = 0
-offset_left = 680.0
-offset_top = 386.0
-offset_right = 1240.0
-offset_bottom = 1466.0
-text = " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam at
- facilisis ligula. Nunc pulvinar ante dignissim 
-lacinia porttitor.Pellentesque mollis 
-sollicitudin quam, a molestie massa vestibulum convallis. 
-Integer non mauris tristique felis semper semper. 
-
-.Maecenas id posuere nulla. Integer lobortis tempus 
-mauris. Curabitur tempus erat non quam pellentesque 
-facilisis. Mauris id maximus  dolor. Nullam tincidunt 
-tempus aliquet. Curabitur sollicitudin eget mauris id 
-laoreet. Nunc ex odio, lacinia id urna quis, 
-hendrerit ultricies leo.
-Aliquam pharetra venenatis laoreet. Proin condimentum 
-sem id rhoncus cursus.  Nulla finibus leo vitae nunc 
-dictum, ac eleifend ex imperdiet. Sed velit lorem, 
-bibendum nec fringilla  imperdiet, facilisis non lacus. 
-Duis at aliquet erat, tincidunt finibus urna. "
+texture = ExtResource("3_ssvc7")
 
 [node name="TextureButton" type="TextureButton" parent="."]
 layout_mode = 0
@@ -74,6 +51,15 @@ offset_right = 760.0
 offset_bottom = 943.0
 scale = Vector2(4, 4)
 texture_normal = ExtResource("5_80pno")
+
+[node name="TextureRect3" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 237.0
+offset_top = 107.0
+offset_right = 717.0
+offset_bottom = 377.0
+scale = Vector2(3, 3)
+texture = ExtResource("6_iet6b")
 
 [connection signal="pressed" from="TextureButton" to="." method="_on_texture_button_pressed"]
 [connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
