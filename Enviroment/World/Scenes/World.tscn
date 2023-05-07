@@ -60,7 +60,6 @@ spaceShipSpawnPoint = Vector3(-90, 4, 0)
 textureLevelUp = NodePath("../Control/TextureLevelUp")
 labelLevelUp = NodePath("../Control/TextureLevelUp/LabelLevelUp")
 labelGameOver = NodePath("../Control/LabelGameOver")
-level = 5
 nofCowsMin = 3
 
 [node name="_cows" type="Node3D" parent="CowHandler"]
