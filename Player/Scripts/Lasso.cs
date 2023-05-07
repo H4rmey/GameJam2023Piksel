@@ -36,9 +36,16 @@ public partial class Lasso : Node3D
     public override void _PhysicsProcess(double delta)
     {
 		this.raycast.TargetPosition = this.lassoEnd.Position;
+
 		if (raycast.GetCollider() as Node3D != null)
 		{
-			cowTarget = raycast.GetCollider() as Cow;
+			String 	targetName 	= (raycast.GetCollider() as Node3D).Name;
+			bool 	contains 	= targetName.IndexOf("Tree", StringComparison.OrdinalIgnoreCase) >= 0;
+
+			if (!contains)
+			{
+				cowTarget = raycast.GetCollider() as Cow;
+			}
 		}
 		else
 		{

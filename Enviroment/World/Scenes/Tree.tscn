@@ -6,6 +6,7 @@
 height = 3.13814
 
 [node name="Tree" type="StaticBody3D"]
+collision_layer = 5
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)

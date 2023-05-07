@@ -122,7 +122,9 @@ public partial class Player : CharacterBody3D
 			textEdit.Visible = !textEdit.Visible;			
 		}
 
-		if (Input.IsActionJustPressed("jump") && !lasso.Visible) {			
+		if (Input.IsActionJustPressed("jump") && !lasso.Visible && canLasso) {			
+			canLasso = false;
+			lassoTimer.Start(lassoRate);
 			lasso.thingy();
 		}
 		

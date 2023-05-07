@@ -232,7 +232,8 @@ public partial class SpaceShip : Area3D
 	public void GameOver()
 	{
 		// goto end scene
-		GetTree().ReloadCurrentScene();
+		Input.MouseMode = Input.MouseModeEnum.Visible;
+		GetTree().ChangeSceneToFile("res://UI/Scenes/GameOver.tscn");
 		// wait a few secodns
 	}
 

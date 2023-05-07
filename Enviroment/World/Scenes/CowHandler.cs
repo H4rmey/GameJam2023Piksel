@@ -31,6 +31,12 @@ public partial class CowHandler : Node3D
 	[Export]
 	public int nofCowsMin = 2;
 	[Export]
+	public int nofCowsToSave = 2;
+	[Export]
+	public int nofCowsRemovePerLevel = 2;
+	[Export]
+	public int levelUpThresholdScaling = 5;
+	[Export]
 	public int levelUpTime = 3;
 
 	private Array<Node3D> cows = new Array<Node3D>();
@@ -78,7 +84,7 @@ public partial class CowHandler : Node3D
 	{
 		update_debug_information();
 
-		if (player.score == nofCows-nofCowsMin)
+		if (player.score == level + nofCowsToSave)
 		{
 			timerLevelUp.Start(levelUpTime);
 		}
@@ -145,18 +151,25 @@ public partial class CowHandler : Node3D
 
 	private void SpawnCows()
 	{
-		nofCows = 3 + level * nofCowsMin;
+		nofCows = nofCowsMin + (spwns.Count - level * nofCowsRemovePerLevel);
 
 		if (nofCows >= spwns.Count)
 		{
 			nofCows = spwns.Count-1;
 		}
 
-		if (nofCows <= 0)
+		if (nofCows < nofCowsMin || nofCows <= 0)
 		{
-			nofCows = 3;
+			nofCows = nofCowsMin;
 		}
 		
+		if (nofCows==nofCowsMin)
+		{
+			RandomNumberGenerator random2 = new RandomNumberGenerator();
+
+			nofCows = random2.RandiRange(nofCowsMin, spwns.Count+1);
+		}
+
 		RandomNumberGenerator random = new RandomNumberGenerator();
 		cows.Clear();
 		for (int i = 0; i < nofCows; i++) 

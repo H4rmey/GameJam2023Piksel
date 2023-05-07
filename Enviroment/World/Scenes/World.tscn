@@ -60,6 +60,8 @@ spaceShipSpawnPoint = Vector3(-90, 4, 0)
 textureLevelUp = NodePath("../Control/TextureLevelUp")
 labelLevelUp = NodePath("../Control/TextureLevelUp/LabelLevelUp")
 labelGameOver = NodePath("../Control/LabelGameOver")
+level = 5
+nofCowsMin = 3
 
 [node name="_cows" type="Node3D" parent="CowHandler"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.593492, 0)
@@ -163,6 +165,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -90, 4, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.86865, 0)
 textEdit = NodePath("../Control/DebugValues")
 spaceShip = NodePath("")
+speed = 2.5
 jump_power = 100.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -621,19 +624,22 @@ texture = ExtResource("10_pbpdr")
 [node name="_Trees" type="Node3D" parent="_Enviroment"]
 
 [node name="Tree" parent="_Enviroment/_Trees" instance=ExtResource("10_ekgib")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.36488, 0, -3.72576)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5697, -9.53674e-07, 5.44399)
 
 [node name="Tree2" parent="_Enviroment/_Trees" instance=ExtResource("10_ekgib")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.02902, 0, -4.72219)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.2585, 0, -1.77959)
 
 [node name="Tree3" parent="_Enviroment/_Trees" instance=ExtResource("10_ekgib")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.32871, 0, 4.72219)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.8269, 0, 6.79741)
 
 [node name="Tree4" parent="_Enviroment/_Trees" instance=ExtResource("10_ekgib")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.953104, 0, 1.60295)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.03036, 0, -4.08816)
 
 [node name="Tree5" parent="_Enviroment/_Trees" instance=ExtResource("10_ekgib")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.38276, 0, 8.05805)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.23324, 0, 8.81997)
+
+[node name="Tree7" parent="_Enviroment/_Trees" instance=ExtResource("10_ekgib")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.35708, -9.53674e-07, -5.07509)
 
 [node name="Tree6" parent="_Enviroment/_Trees" instance=ExtResource("10_ekgib")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.84501, 0, 2.94596)

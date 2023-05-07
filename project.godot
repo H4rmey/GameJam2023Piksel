@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="GameJam2023Piksel"
-run/main_scene="res://Enviroment/World/Scenes/World.tscn"
+run/main_scene="res://UI/Scenes/Start Screen.tscn"
 config/features=PackedStringArray("4.0", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
