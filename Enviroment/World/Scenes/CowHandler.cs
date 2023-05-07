@@ -19,6 +19,8 @@ public partial class CowHandler : Node3D
 	[Export]
 	public Vector3 spaceShipSpawnPoint;
 	[Export]
+	public TextureRect textureLevelUp;
+	[Export]
 	public Label labelLevelUp;
 	[Export]
 	public Label labelGameOver;
@@ -43,11 +45,11 @@ public partial class CowHandler : Node3D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{		
-		labelLevelUp.Visible = false;
-		//labelTween = GetTree().CreateTween();
-		//labelTween.SetLoops();
-		//labelTween.TweenProperty(labelLevelUp, "font_size", 20, 1f);
-		//labelTween.TweenProperty(labelLevelUp, "font_size", 34, 1f);
+		textureLevelUp.Visible = false;
+		labelTween = GetTree().CreateTween();
+		labelTween.SetLoops();
+		labelTween.TweenProperty(labelLevelUp, "position", labelLevelUp.Position + new Vector2(0, -10), 0.5f);
+		labelTween.TweenProperty(labelLevelUp, "position", labelLevelUp.Position + new Vector2(0, 0), 1f);
 
 
 		timerLevelUp = new Timer(); 
@@ -84,20 +86,21 @@ public partial class CowHandler : Node3D
 
     private void OnLevelUpLabelChange()
     {
-		labelLevelUp.Visible = false;
+		textureLevelUp.Visible = false;
     }
 
 
 	private void LeveUp()
 	{
-		timerLevelUpLabel.Start(2);
-
 		level++;
 		if (spaceShip != null) {
-			labelLevelUp.Visible = true;
 			spaceShip.QueueFree();
 			RemoveCows();
 		}
+
+		labelLevelUp.Text=Convert.ToString(level+1);
+		textureLevelUp.Visible = true;
+		timerLevelUpLabel.Start(2);
 
 		CreateSpaceShip();
 		SpawnCows();
