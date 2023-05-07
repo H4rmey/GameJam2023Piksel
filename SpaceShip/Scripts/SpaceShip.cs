@@ -27,6 +27,7 @@ public partial class SpaceShip : Area3D
 	};
 
 	private Timer 	timer;
+	private Timer 	timerGameOver;
 	private Tween 	tweenHover;
 	public int 		event_id 			= 0;
 	public int 		currentNodeIndex    = 0;
@@ -38,10 +39,11 @@ public partial class SpaceShip : Area3D
 	public float 	cowPullForceMultiplier = 1;
 
 
-	public Vector3 destination;
+	public Vector3  destination;
 	public Node3D 	currentTarget;
 	public Cow 		cowTarget;
 	public Sprite3D sprite;
+	public Label 	labelGameOver;
 
 	public Node3D pathEndPoints;
 	public Node3D pathBetweenPoints;
@@ -70,9 +72,16 @@ public partial class SpaceShip : Area3D
 		timer.Autostart 	= true;
 		timer.OneShot 		= true;
 		timer.Timeout 		+= OnTimerTimeout;
+		
+		timerGameOver = new Timer(); 
+		AddChild(timerGameOver);
+		timerGameOver.Autostart 	= true;
+		timerGameOver.OneShot 		= true;
+		timerGameOver.Timeout 		+= GameOver;
 
 		this.Connect(SignalName.OnPositionReached, new Callable(this, MethodName.ShipReachedDestination));	
 
+		labelGameOver.Visible = false;
 	}
 
 	public override void _Process(double delta)
@@ -182,7 +191,10 @@ public partial class SpaceShip : Area3D
 
 			if (cows.Count < 2 )
 			{
-				GameOver();
+				timerGameOver.Start(4);
+				timer.Stop();
+				mustWait = true;
+				labelGameOver.Visible = true;
 			}
 		}
 
@@ -208,7 +220,7 @@ public partial class SpaceShip : Area3D
 		{
 			GD.Print("Ship: Timer Start! ", wait_time, " with multiplier: ", cowPullForceMultiplier);
 
-			mustWait 		= true;
+			mustWait = true;
 			timer.Start(speed);
 		}
 
@@ -219,8 +231,9 @@ public partial class SpaceShip : Area3D
 
 	public void GameOver()
 	{
+		// goto end scene
 		GetTree().ReloadCurrentScene();
-		GD.Print("GAME OVER, YOU ARE BAD...");
+		// wait a few secodns
 	}
 
 	private void CalculateNextEndPoint(Array<Node3D> nodes)

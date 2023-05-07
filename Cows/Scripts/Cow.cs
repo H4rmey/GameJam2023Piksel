@@ -8,6 +8,8 @@ public partial class Cow : RigidBody3D
 	[Export]
 	public SpaceShip spaceShip;
 	[Export]
+	public AudioStreamPlayer3D cowMooSound;
+	[Export]
 	public float speed;
 	[Export]
 	public float timeToResetVelocity = 4;
@@ -24,6 +26,8 @@ public partial class Cow : RigidBody3D
 
 	public override void _Ready()
 	{
+		//cowMooSound.Play();
+
 		spaceShip.BodyEntered += _on_space_ship_body_entered;
 		spaceShip.BodyExited  += _on_space_ship_body_exited;
 
@@ -124,7 +128,6 @@ public partial class Cow : RigidBody3D
 	{
 		if (node == this)
 		{
-			GD.Print("Moooo!");
 			this.is_pulled = true;
 		} 
 	}
@@ -133,7 +136,6 @@ public partial class Cow : RigidBody3D
 	{
 		if (node == this)
 		{
-			GD.Print("Moooo?");
 			this.is_pulled = false;
 		}
 	}

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://vwtsc8y8sj3y"]
+[gd_scene load_steps=19 format=3 uid="uid://vwtsc8y8sj3y"]
 
 [ext_resource type="Texture2D" uid="uid://bag407c1am5gn" path="res://Enviroment/World/Sprites/FloorTile.png" id="1_ch7ao"]
 [ext_resource type="PackedScene" uid="uid://b8gj50b7hdxu8" path="res://Player/Scenes/Player.tscn" id="1_q0mud"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" path="res://Enviroment/World/Scenes/Grass.tscn" id="8_e7tfh"]
 [ext_resource type="Texture2D" uid="uid://ditys0h3alhw7" path="res://Enviroment/World/Sprites/Grass 2.png" id="9_c1juw"]
 [ext_resource type="Texture2D" uid="uid://cwmhc3mpa2lew" path="res://Enviroment/World/Sprites/Farm.png" id="9_p6h5n"]
+[ext_resource type="FontFile" uid="uid://bi70nipdhe8k" path="res://UI/Fonts/8-bit-pusab.ttf" id="10_6778n"]
 [ext_resource type="Texture2D" uid="uid://ckppxbskvx5an" path="res://Enviroment/World/Sprites/tree_BG.png" id="10_emvmx"]
 [ext_resource type="Texture2D" uid="uid://dktsyg1urg61s" path="res://Enviroment/World/Sprites/Rock1.png" id="10_pbpdr"]
 
@@ -33,11 +34,18 @@ size = Vector2(0.25, 0.25)
 [sub_resource type="BoxShape3D" id="3"]
 size = Vector3(129.725, 0.002, 111.284)
 
+[sub_resource type="LabelSettings" id="LabelSettings_le8r4"]
+font = ExtResource("10_6778n")
+font_size = 32
+font_color = Color(0.729412, 0.803922, 1, 1)
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+
 [sub_resource type="SyntaxHighlighter" id="SyntaxHighlighter_mspgf"]
 
 [node name="World" type="Node3D"]
 
-[node name="CowHandler" type="Node3D" parent="." node_paths=PackedStringArray("text", "pathCows", "pathSpawnpoints", "pathEndPoints", "pathBetweenPoints", "player") groups=["Cows"]]
+[node name="CowHandler" type="Node3D" parent="." node_paths=PackedStringArray("text", "pathCows", "pathSpawnpoints", "pathEndPoints", "pathBetweenPoints", "player", "labelLevelUp", "labelGameOver") groups=["Cows"]]
 process_priority = -10
 script = ExtResource("2_b6obw")
 text = NodePath("../Control/DebugValues")
@@ -46,7 +54,9 @@ pathSpawnpoints = NodePath("_spawnpoints")
 pathEndPoints = NodePath("../_ShipTravelPointsEnd")
 pathBetweenPoints = NodePath("../_ShipTravelPoints")
 player = NodePath("../Player")
-spaceShipSpawnPoint = Vector3(0, 4, 0)
+spaceShipSpawnPoint = Vector3(-90, 4, 0)
+labelLevelUp = NodePath("../Control/LabelLevelUp")
+labelGameOver = NodePath("../Control/LabelGameOver")
 
 [node name="_cows" type="Node3D" parent="CowHandler"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.593492, 0)
@@ -613,10 +623,43 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="LabelLevelUp" type="Label" parent="Control"]
+visible = false
+layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 768.0
+offset_top = 104.0
+offset_right = -791.0
+offset_bottom = -844.0
+grow_horizontal = 2
+text = "LevelUp!"
+label_settings = SubResource("LabelSettings_le8r4")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LabelGameOver" type="Label" parent="Control"]
+layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 768.0
+offset_top = 104.0
+offset_right = -791.0
+offset_bottom = -844.0
+grow_horizontal = 2
+text = "Game Over!
+
+Bob lost to many cows :("
+label_settings = SubResource("LabelSettings_le8r4")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="DebugValues" type="TextEdit" parent="Control"]
 visible = false
 layout_mode = 0
-offset_right = 519.0
-offset_bottom = 1077.0
+offset_left = 775.0
+offset_top = 157.0
+offset_right = 1294.0
+offset_bottom = 1234.0
 theme_override_colors/background_color = Color(0, 0, 0, 0)
 syntax_highlighter = SubResource("SyntaxHighlighter_mspgf")

@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://b8tbcdl2dafpv"]
+[gd_scene load_steps=6 format=3 uid="uid://b8tbcdl2dafpv"]
 
 [ext_resource type="Script" path="res://Cows/Scripts/Cow.cs" id="1_1p54e"]
 [ext_resource type="Texture2D" uid="uid://clgeracv8ccax" path="res://Cows/Sprites/Cow1.png" id="1_5os6g"]
+[ext_resource type="AudioStream" uid="uid://mca3r238rvqh" path="res://Audios/Cow moo #5.wav" id="3_41h10"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_kp38e"]
 bounce = 0.5
@@ -10,12 +11,13 @@ bounce = 0.5
 radius = 0.410383
 height = 0.820767
 
-[node name="Cow" type="RigidBody3D"]
+[node name="Cow" type="RigidBody3D" node_paths=PackedStringArray("cowMooSound")]
 collision_layer = 5
 physics_material_override = SubResource("PhysicsMaterial_kp38e")
 gravity_scale = 0.5
 freeze_mode = 1
 script = ExtResource("1_1p54e")
+cowMooSound = NodePath("AudioStreamPlayer3D")
 
 [node name="SpriteCow" type="Sprite3D" parent="."]
 billboard = 2
@@ -30,3 +32,6 @@ target_position = Vector3(0, -0.5, 0)
 collision_mask = 8
 collide_with_areas = true
 debug_shape_custom_color = Color(0, 1, 0, 1)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_41h10")

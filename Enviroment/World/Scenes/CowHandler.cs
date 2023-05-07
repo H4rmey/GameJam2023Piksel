@@ -19,6 +19,10 @@ public partial class CowHandler : Node3D
 	[Export]
 	public Vector3 spaceShipSpawnPoint;
 	[Export]
+	public Label labelLevelUp;
+	[Export]
+	public Label labelGameOver;
+	[Export]
 	public int level;
 	[Export]
 	public int nofCows = 3;
@@ -31,43 +35,66 @@ public partial class CowHandler : Node3D
 	private Array<Node3D> spwns = new Array<Node3D>();
 	
 	private String debugText;
-	private Timer timer;
+	private Timer timerLevelUp;
+	private Timer timerLevelUpLabel;
+	private Tween labelTween;
 	public SpaceShip spaceShip;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{		
-		level--;
+		labelLevelUp.Visible = false;
+		//labelTween = GetTree().CreateTween();
+		//labelTween.SetLoops();
+		//labelTween.TweenProperty(labelLevelUp, "font_size", 20, 1f);
+		//labelTween.TweenProperty(labelLevelUp, "font_size", 34, 1f);
 
-		timer = new Timer(); 
-		AddChild(timer);
-		timer.Autostart 	= true;
-		timer.OneShot 		= true;
-		timer.Timeout 		+= LeveUp;
+
+		timerLevelUp = new Timer(); 
+		AddChild(timerLevelUp);
+		timerLevelUp.Autostart 		= true;
+		timerLevelUp.OneShot 		= true;
+		timerLevelUp.Timeout 		+= LeveUp;
+
+		timerLevelUpLabel = new Timer(); 
+		AddChild(timerLevelUpLabel);
+		timerLevelUpLabel.Autostart 	= true;
+		timerLevelUpLabel.OneShot 		= true;
+		timerLevelUpLabel.Timeout 		+= OnLevelUpLabelChange;
 
 		for (int i = 0; i < pathSpawnpoints.GetChildCount(); i++) 
 		{
 			spwns.Add(pathSpawnpoints.GetChild<Node3D>(i));
  		}
 
+		level--;
 		LeveUp();
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+    // Called every frame. 'delta' is the elapsed time since the previous frame.
+    public override void _Process(double delta)
 	{
 		update_debug_information();
 
 		if (player.score == nofCows-nofCowsMin)
 		{
-			timer.Start(levelUpTime);
+			timerLevelUp.Start(levelUpTime);
 		}
 	}
 
+    private void OnLevelUpLabelChange()
+    {
+		labelLevelUp.Visible = false;
+    }
+
+
 	private void LeveUp()
 	{
+		timerLevelUpLabel.Start(2);
+
 		level++;
 		if (spaceShip != null) {
+			labelLevelUp.Visible = true;
 			spaceShip.QueueFree();
 			RemoveCows();
 		}
@@ -87,6 +114,7 @@ public partial class CowHandler : Node3D
 
 		// set some variables
 		this.spaceShip.player 				= this.player;
+		this.spaceShip.labelGameOver		= this.labelGameOver;
 		this.spaceShip.pathEndPoints 		= this.pathEndPoints;
 		this.spaceShip.pathBetweenPoints 	= this.pathBetweenPoints;
 
