@@ -13,6 +13,9 @@ public partial class SpaceShip : Area3D
 	[Export]
 	public float hoverAmount = 0.2f;
 	
+	public AudioStreamPlayer3D spaceHopSound;
+	public AudioStreamPlayer3D spaceAwaySound;
+
 	public String[] behaviour = {
 		"wait_1",
 		"between_5",
@@ -59,6 +62,9 @@ public partial class SpaceShip : Area3D
 	
 	public override void _Ready()
 	{
+		spaceHopSound = this.GetNode<AudioStreamPlayer3D>("HopSound");
+		spaceAwaySound = this.GetNode<AudioStreamPlayer3D>("AudioSpaceShipGoingAway");
+
 		sprite = GetNode<Sprite3D>("SpriteSpaceShip");
 		tweenHover = GetTree().CreateTween();
 		tweenHover.SetLoops();
@@ -176,7 +182,7 @@ public partial class SpaceShip : Area3D
 				{
 					Cow cow = c as Cow;
 
-					cows.Remove(cowTarget);
+					cows.Remove(cow);
 
 					cow.dumcowmode = true;
 					cow.QueueFree();
@@ -205,16 +211,19 @@ public partial class SpaceShip : Area3D
 		else if (event_name == "between")
 		{
 			CalculateNextEndPoint(betweenPoints);
+			spaceHopSound.Play();
 		}
 		else if (event_name == "cow")
 		{
 			CalculateNextEndPoint(cows);
 			cowTarget = currentTarget as Cow;
 			destination = new Vector3(destination.X, this.GlobalPosition.Y, destination.Z);
+			spaceHopSound.Play();
 		}
 		else if (event_name == "end")
 		{
 			CalculateNextEndPoint(endPoints);
+			spaceAwaySound.Play();
 		}
 		else if (event_name == "wait")
 		{

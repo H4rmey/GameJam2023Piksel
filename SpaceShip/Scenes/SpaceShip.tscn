@@ -1,7 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://bjjiuptmrihtw"]
+[gd_scene load_steps=7 format=3 uid="uid://bjjiuptmrihtw"]
 
 [ext_resource type="Script" path="res://SpaceShip/Scripts/SpaceShip.cs" id="1_rtukt"]
 [ext_resource type="Texture2D" uid="uid://d3uif44sdfrd5" path="res://SpaceShip/Sprites/SpaceShip.png" id="1_uk837"]
+[ext_resource type="AudioStream" uid="uid://bsh4vmicdafj5" path="res://Audios/SpaceShipPassive.wav" id="3_5g33o"]
+[ext_resource type="AudioStream" uid="uid://biu5skweudai0" path="res://Audios/MoveAwayFastSpaceShip.wav" id="4_fm0jr"]
+[ext_resource type="AudioStream" uid="uid://dl5xs1f27one0" path="res://Audios/pewspacy.wav" id="5_84m7r"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_olaby"]
 height = 13.748
@@ -27,3 +30,17 @@ spot_angle = 15.2056
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6.4264, 0)
 shape = SubResource("CylinderShape3D_olaby")
+
+[node name="AudioSpaceShipPassive" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_5g33o")
+volume_db = -12.0
+autoplay = true
+max_distance = 41.16
+
+[node name="AudioSpaceShipGoingAway" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_fm0jr")
+volume_db = 10.0
+
+[node name="HopSound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("5_84m7r")
+volume_db = 1.0

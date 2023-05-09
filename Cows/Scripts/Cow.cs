@@ -10,6 +10,8 @@ public partial class Cow : RigidBody3D
 	[Export]
 	public AudioStreamPlayer3D cowMooSound;
 	[Export]
+	public AudioStreamPlayer3D beamUpSound;
+	[Export]
 	public float speed;
 	[Export]
 	public float timeToResetVelocity = 4;
@@ -26,7 +28,7 @@ public partial class Cow : RigidBody3D
 
 	public override void _Ready()
 	{
-		//cowMooSound.Play();
+		//cowMooSound.Stop();
 
 		spaceShip.BodyEntered += _on_space_ship_body_entered;
 		spaceShip.BodyExited  += _on_space_ship_body_exited;
@@ -66,6 +68,8 @@ public partial class Cow : RigidBody3D
 
 	public override void _PhysicsProcess(double delta)
 	{
+		StopCowMooSound();
+
 		if (dumcowmode){
 			return;
 		}
@@ -103,7 +107,21 @@ public partial class Cow : RigidBody3D
 
 		if (follow_ship)
 		{
+			beamUpSound.Stop();
 			this.GlobalPosition = spaceShip.sprite.GlobalPosition - new Vector3(0,spaceShip.cowHoverBelow,0);
+		}
+	}
+
+	private void PlayCowMooSound()
+	{
+		cowMooSound.Play(4.7f);
+	}
+
+	private void StopCowMooSound()
+	{
+		if (cowMooSound.GetPlaybackPosition() > 6.6f)
+		{
+			cowMooSound.Stop();
 		}
 	}
 
@@ -128,6 +146,8 @@ public partial class Cow : RigidBody3D
 	{
 		if (node == this)
 		{
+			PlayCowMooSound();
+			beamUpSound.Play();
 			this.is_pulled = true;
 		} 
 	}
@@ -136,12 +156,15 @@ public partial class Cow : RigidBody3D
 	{
 		if (node == this)
 		{
+			beamUpSound.Stop();
 			this.is_pulled = false;
 		}
 	}
 
-	public void CowIsPulled(Vector3 location)
+	public void CowIsPulledByPlayer(Vector3 location)
 	{
+		PlayCowMooSound();
+
 		Vector3 forceDirection = (location - this.GlobalPosition);
 
 		spaceShip.cowTarget = null;

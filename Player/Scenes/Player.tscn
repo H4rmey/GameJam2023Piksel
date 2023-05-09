@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://b8gj50b7hdxu8"]
+[gd_scene load_steps=10 format=3 uid="uid://b8gj50b7hdxu8"]
 
 [ext_resource type="Script" path="res://Player/Scripts/Player.cs" id="1"]
 [ext_resource type="Texture2D" uid="uid://ui8qxqxc2qmg" path="res://Player/Sprites/Bob1.png" id="2_qhh1n"]
 [ext_resource type="Script" path="res://Player/Scripts/Lasso.cs" id="3_idyi8"]
+[ext_resource type="AudioStream" uid="uid://dsw0vs5q6qemq" path="res://Audios/lasso_sound_effect.mp3" id="4_bgvw3"]
+[ext_resource type="AudioStream" uid="uid://b7h5jlyik1yqy" path="res://Audios/BubbleSound.wav" id="5_a4kme"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xl7f3"]
 albedo_color = Color(1, 0.788235, 0, 1)
@@ -28,12 +30,15 @@ max_pitch = 45.0
 texture_filter = 0
 texture = ExtResource("2_qhh1n")
 
-[node name="Lasso" type="Node3D" parent="." node_paths=PackedStringArray("lassoOrigin", "lassoEnd", "raycast")]
+[node name="Lasso" type="Node3D" parent="." node_paths=PackedStringArray("lassoOrigin", "lassoEnd", "raycast", "lasso2", "whipSound", "upScoreSound")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.223, -0.076, 0)
 script = ExtResource("3_idyi8")
 lassoOrigin = NodePath("../LassoOrigin")
 lassoEnd = NodePath("../CameraPivot/CameraBoom/Camera/LassoEnd")
 raycast = NodePath("../CameraPivot/CameraBoom/Camera/RayCast3D")
+lasso2 = NodePath("../CameraPivot/CameraBoom/Camera/RayCast3D2")
+whipSound = NodePath("AudioStreamPlayer3D")
+upScoreSound = NodePath("AudioStreamPlayer")
 thickness = 0.3
 lassoThrowBackSpeed = 0.3
 
@@ -41,6 +46,14 @@ lassoThrowBackSpeed = 0.3
 transform = Transform3D(0.1, 0, 0, 0, 1, 0, 0, 0, 0.1, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_xl7f3")
 mesh = SubResource("CylinderMesh_7mds1")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Lasso"]
+stream = ExtResource("4_bgvw3")
+volume_db = -10.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Lasso"]
+stream = ExtResource("5_a4kme")
+volume_db = 4.0
 
 [node name="LassoOrigin" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.223422, -0.076488, -1.49012e-08)
@@ -60,7 +73,7 @@ spring_length = 2.0
 transform = Transform3D(1, 0, 0, 0, 1, 1.49012e-08, 0, -1.49012e-08, 1, 0, 0, 0)
 
 [node name="LassoEnd" type="Node3D" parent="CameraPivot/CameraBoom/Camera"]
-transform = Transform3D(1, 0, 0, 0, 0.984808, -0.173648, 0, 0.173648, 0.984808, 0, 2, -15.0891)
+transform = Transform3D(1, 0, 0, 0, 0.984808, -0.173648, 0, 0.173648, 0.984808, 0, 0.545, -15)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CameraPivot/CameraBoom/Camera/LassoEnd"]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
@@ -69,7 +82,14 @@ mesh = SubResource("BoxMesh_tievr")
 
 [node name="RayCast3D" type="RayCast3D" parent="CameraPivot/CameraBoom/Camera"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.223, -0.076, 0)
-target_position = Vector3(0, 0, -8)
+target_position = Vector3(0, 0, -15)
+collision_mask = 4
+collide_with_areas = true
+debug_shape_custom_color = Color(1, 0, 0, 1)
+
+[node name="RayCast3D2" type="RayCast3D" parent="CameraPivot/CameraBoom/Camera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.223, -0.076, 0)
+target_position = Vector3(0, 0, -15)
 collision_mask = 4
 collide_with_areas = true
 debug_shape_custom_color = Color(1, 0, 0, 1)

@@ -10,6 +10,12 @@ public partial class Lasso : Node3D
 	[Export]
 	public RayCast3D raycast;
 	[Export]
+	public RayCast3D lasso2;
+	[Export]
+	public AudioStreamPlayer3D whipSound;
+	[Export]
+	public AudioStreamPlayer upScoreSound;
+	[Export]
 	public float thickness=0.2f;
 	[Export]
 	public float lassoThrowSpeed = 0.2f;
@@ -33,18 +39,25 @@ public partial class Lasso : Node3D
 		this.tweenThrow.StepFinished += OnThrowStepFinished;
 	}
 
+	// Called every frame. 'delta' is the elapsed time since the previous frame.
+	public override void _Process(double delta)
+	{
+		this.StopWhipSound();
+		this.DoLasso(this.lassoOrigin.GlobalPosition, this.lassoEnd.GlobalPosition);
+	}
+
     public override void _PhysicsProcess(double delta)
     {
-		this.raycast.TargetPosition = this.lassoEnd.Position;
+		//this.raycast.TargetPosition = this.lassoEnd.Position;
 
 		if (raycast.GetCollider() as Node3D != null)
 		{
-			String 	targetName 	= (raycast.GetCollider() as Node3D).Name;
+			String targetName = raycast.Name;
 			bool 	contains 	= targetName.IndexOf("Tree", StringComparison.OrdinalIgnoreCase) >= 0;
 
 			if (!contains)
 			{
-				cowTarget = raycast.GetCollider() as Cow;
+				cowTarget = lasso2.GetCollider() as Cow;
 			}
 		}
 		else
@@ -65,6 +78,20 @@ public partial class Lasso : Node3D
 		this.Scale = new Vector3(thickness,length/2, thickness);
 	}
 
+	private void PlayWhipSound()
+	{
+		whipSound.Play(0.05f);
+	}
+
+	private void StopWhipSound()
+	{
+		if (whipSound.GetPlaybackPosition() > 0.55f)
+		{
+			whipSound.Stop();
+		}
+	}
+
+
 	private void OnThrowStepFinished(long step)
 	{
 		if (step != 0) {
@@ -75,22 +102,18 @@ public partial class Lasso : Node3D
 			return;
 		}
 
-		cowTarget.CowIsPulled(this.player.GlobalPosition);
+		cowTarget.CowIsPulledByPlayer(this.player.GlobalPosition);
 
 		if (cowTarget.is_taken) {
+			upScoreSound.Play();
 			player.score++;	
 		}
 
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-		this.DoLasso(this.lassoOrigin.GlobalPosition, this.lassoEnd.GlobalPosition);
-	}
-
 	public void thingy()
 	{
+		this.PlayWhipSound();
 		this.Visible = true;
 		this.tweenThrow.Play();
 	}
